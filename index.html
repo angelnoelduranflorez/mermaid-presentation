@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mermaid: Diagramación Inteligente — Presentación por un Experto en IA</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <section id="presentation" aria-label="Presentación sobre Mermaid">
+    <canvas class="particles-canvas" id="particles-canvas" aria-hidden="true" tabindex="-1"></canvas>
+    <div id="slide-container" aria-live="polite" aria-atomic="true"></div>
+    <nav class="navigation-bar" aria-label="Navegación de diapositivas">
+      <button id="btn-previous" type="button" disabled>&#8592; Anterior</button>
+      <output class="progress-indicator" aria-label="Progreso de la presentación">
+        <span id="progress-text">1 / 35</span>
+        <progress id="progress-bar-fill" class="progress-bar" value="1" max="35">1 de 35</progress>
+      </output>
+      <button id="btn-next" type="button">Siguiente &#8594;</button>
+    </nav>
+  </section>
+
+  <!-- Mermaid.js via script tag (funciona sin servidor) -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+
+  <script>
+  // ============================================================
+  // PARTICLES SYSTEM — Fondo dinámico con partículas flotantes
+  // ============================================================
+  (function initParticles() {
+    const canvas = document.getElementById('particles-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let animId = null;
+    const PARTICLE_COUNT = 50;
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    function createParticle() {
+      return {
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        size: Math.random() * 2 + 0.5,
+        speedX: (Math.random() - 0.5) * 0.4,
+        speedY: (Math.random() - 0.5) * 0.3,
+        opacity: Math.random() * 0.5 + 0.1,
+        hue: Math.random() * 60 + 200, // azul-violeta
+      };
+    }
+
+    function init() {
+      resize();
+      particles = [];
+      for (let i = 0; i < PARTICLE_COUNT; i++) {
+        particles.push(createParticle());
+      }
+    }
+
+    function drawParticle(p) {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fillStyle = 'hsla(' + p.hue + ', 70%, 70%, ' + p.opacity + ')';
+      ctx.fill();
+    }
+
+    function connectParticles() {
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          var dx = particles[i].x - particles[j].x;
+          var dy = particles[i].y - particles[j].y;
+          var dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 120) {
+            ctx.beginPath();
+            ctx.strokeStyle = 'hsla(220, 70%, 70%, ' + (0.08 * (1 - dist / 120)) + ')';
+            ctx.lineWidth = 0.5;
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(function(p) {
+        p.x += p.speedX;
+        p.y += p.speedY;
+        if (p.x < 0 || p.x > canvas.width) p.speedX *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.speedY *= -1;
+        drawParticle(p);
+      });
+      connectParticles();
+      animId = requestAnimationFrame(animate);
+    }
+
+    window.addEventListener('resize', resize);
+    init();
+    animate();
+  })();
+
+  // ============================================================
+  // SLIDE DATA
+  // ============================================================
+  const slides = [
+    {
+      id: 'intro', type: 'title',
+      title: 'Mermaid: Diagramación Inteligente',
+      subtitle: 'Presentado por un Experto en Inteligencia Artificial',
+      content: '<p>Descubre cómo transformar texto plano en diagramas profesionales con Mermaid, la herramienta que está revolucionando la documentación técnica.</p>',
+    },
+    {
+      id: 'table-of-contents', type: 'index',
+      title: 'Índice de la Presentación',
+      indexItems: [
+        { label: 'Fundamentos de Mermaid', targetId: 'what-is-mermaid' },
+        { label: 'Tipos de Diagramas', targetId: 'flowchart' },
+        { label: 'Diagramas Avanzados', targetId: 'mindmap-diagram' },
+        { label: 'Configuración y Temas', targetId: 'themes-config' },
+        { label: 'Editor Interactivo', targetId: 'editor-playground' },
+        { label: 'Comparativa con Otras Herramientas', targetId: 'comparison' },
+        { label: 'Casos de Uso', targetId: 'use-case-docs' },
+        { label: 'Mejores Prácticas', targetId: 'best-practices' },
+        { label: 'Cierre y Recursos', targetId: 'closing' },
+      ],
+    },
+    {
+      id: 'what-is-mermaid', type: 'content', section: 'Fundamentos',
+      title: '¿Qué es Mermaid?',
+      content: '<p>Mermaid es una herramienta de código abierto basada en JavaScript que genera diagramas a partir de texto plano.</p>',
+      bulletPoints: [
+        'Creado por Knut Sveidqvist en 2014',
+        'Renderiza diagramas directamente en el navegador',
+        'Adoptado por GitHub, GitLab, Notion y más',
+        'Más de 70 000 estrellas en GitHub',
+      ],
+    },
+    {
+      id: 'basic-syntax', type: 'content', section: 'Fundamentos',
+      title: 'Sintaxis Básica de Mermaid',
+      content: '<p>Un diagrama se define con una palabra clave de tipo seguida de nodos y conexiones en texto plano.</p>',
+      bulletPoints: [
+        'Comienza con el tipo: graph, sequenceDiagram, classDiagram…',
+        'Nodos con identificadores y etiquetas entre corchetes',
+        'Conexiones con flechas: -->, ---, -.->',
+        'Soporta subgrafos, estilos y directivas',
+      ],
+      mermaidCode: 'graph LR\n    A[Texto Plano] --> B[Parser Mermaid]\n    B --> C[Diagrama SVG]',
+      mermaidAltText: 'Diagrama de flujo: texto plano pasa por parser Mermaid para producir SVG.',
+    },
+    {
+      id: 'advantages', type: 'content', section: 'Fundamentos',
+      title: 'Ventajas de Mermaid',
+      content: '<p>Beneficios frente a herramientas visuales tradicionales como Visio o Lucidchart.</p>',
+      bulletPoints: [
+        'Versionable en Git: los diagramas son texto',
+        'Integración nativa en documentación Markdown',
+        'Generación automatizada con IA (ChatGPT, Copilot)',
+        'Sin dependencia de herramientas propietarias',
+        'Renderizado consistente en cualquier plataforma',
+      ],
+    },
+    {
+      id: 'rendering-architecture', type: 'content', section: 'Fundamentos',
+      title: 'Arquitectura de Renderizado',
+      content: '<p>Mermaid transforma texto en SVG mediante un pipeline de parsing y renderizado.</p>',
+      mermaidCode: 'graph TD\n    A["Código Mermaid"] --> B[Lexer]\n    B --> C[Parser JISON]\n    C --> D[Árbol Semántico]\n    D --> E[Motor dagre-d3]\n    E --> F["Salida SVG"]',
+      mermaidAltText: 'Pipeline de renderizado de Mermaid desde código hasta SVG.',
+      bulletPoints: [
+        'Lexer tokeniza la entrada de texto',
+        'Parser JISON genera un árbol de sintaxis',
+        'dagre-d3 calcula el layout',
+        'El resultado es SVG estándar en el DOM',
+      ],
+    },
+    {
+      id: 'flowchart', type: 'diagram', section: 'Tipos de Diagramas',
+      title: 'Diagramas de Flujo (Flowchart)',
+      content: '<p>El tipo más utilizado. Representan procesos, decisiones y flujos de trabajo.</p>',
+      mermaidCode: 'graph TD\n    A[Inicio] --> B{¿Autenticado?}\n    B -->|Sí| C[Dashboard]\n    B -->|No| D[Login]\n    D --> E[Credenciales]\n    E --> F{¿Válidas?}\n    F -->|Sí| C\n    F -->|No| G[Error]\n    G --> D',
+      mermaidAltText: 'Diagrama de flujo de autenticación de usuario.',
+    },
+    {
+      id: 'sequence-diagram', type: 'diagram', section: 'Tipos de Diagramas',
+      title: 'Diagramas de Secuencia',
+      content: '<p>Modelan interacciones entre actores y sistemas a lo largo del tiempo.</p>',
+      mermaidCode: 'sequenceDiagram\n    participant U as Usuario\n    participant F as Frontend\n    participant A as API\n    participant DB as BD\n    U->>F: Clic Guardar\n    F->>A: POST /api/datos\n    A->>DB: INSERT\n    DB-->>A: OK\n    A-->>F: 201 Created\n    F-->>U: Éxito',
+      mermaidAltText: 'Diagrama de secuencia: usuario, frontend, API y base de datos.',
+    },
+    {
+      id: 'class-diagram', type: 'diagram', section: 'Tipos de Diagramas',
+      title: 'Diagramas de Clases',
+      content: '<p>Representan la estructura estática de un sistema orientado a objetos.</p>',
+      mermaidCode: 'classDiagram\n    class Animal {\n        +String nombre\n        +int edad\n        +hacerSonido() void\n    }\n    class Perro {\n        +String raza\n        +buscar() void\n    }\n    class Gato {\n        +boolean esInterior\n        +ronronear() void\n    }\n    Animal <|-- Perro\n    Animal <|-- Gato',
+      mermaidAltText: 'Diagrama de clases con Animal, Perro y Gato.',
+    },
+    {
+      id: 'state-diagram', type: 'diagram', section: 'Tipos de Diagramas',
+      title: 'Diagramas de Estado',
+      content: '<p>Modelan estados de un objeto y transiciones entre ellos.</p>',
+      mermaidCode: 'stateDiagram-v2\n    [*] --> Borrador\n    Borrador --> EnRevision : Enviar\n    EnRevision --> Aprobado : Aprobar\n    EnRevision --> Rechazado : Rechazar\n    Rechazado --> Borrador : Corregir\n    Aprobado --> Publicado : Publicar\n    Publicado --> [*]',
+      mermaidAltText: 'Diagrama de estado de un documento: borrador a publicado.',
+    },
+    {
+      id: 'gantt-diagram', type: 'diagram', section: 'Tipos de Diagramas',
+      title: 'Diagramas de Gantt',
+      content: '<p>Visualizan la planificación temporal de un proyecto.</p>',
+      mermaidCode: 'gantt\n    title Plan de Proyecto\n    dateFormat YYYY-MM-DD\n    section Diseño\n    Investigación :a1, 2024-01-01, 10d\n    Prototipo :a2, after a1, 15d\n    section Desarrollo\n    Backend :b1, after a2, 20d\n    Frontend :b2, after a2, 25d\n    section Pruebas\n    Testing :c1, after b1, 10d',
+      mermaidAltText: 'Diagrama de Gantt con fases de diseño, desarrollo y pruebas.',
+    },
+    {
+      id: 'er-diagram', type: 'diagram', section: 'Tipos de Diagramas',
+      title: 'Diagramas Entidad-Relación',
+      content: '<p>Modelan la estructura de una base de datos.</p>',
+      mermaidCode: 'erDiagram\n    USUARIO ||--o{ PEDIDO : realiza\n    PEDIDO ||--|{ LINEA_PEDIDO : contiene\n    PRODUCTO ||--o{ LINEA_PEDIDO : incluido_en\n    USUARIO {\n        int id PK\n        string nombre\n        string email\n    }\n    PEDIDO {\n        int id PK\n        date fecha\n        float total\n    }',
+      mermaidAltText: 'Diagrama ER con Usuario, Pedido y Producto.',
+    },
+    {
+      id: 'pie-chart', type: 'diagram', section: 'Tipos de Diagramas',
+      title: 'Diagramas de Pastel (Pie Chart)',
+      content: '<p>Visualizan distribuciones porcentuales de forma sencilla.</p>',
+      mermaidCode: 'pie title Lenguajes más usados 2024\n    "JavaScript" : 30\n    "Python" : 25\n    "TypeScript" : 18\n    "Java" : 12\n    "C#" : 8\n    "Otros" : 7',
+      mermaidAltText: 'Diagrama de pastel de lenguajes de programación más usados.',
+    },
+    {
+      id: 'mindmap-diagram', type: 'diagram', section: 'Diagramas Avanzados',
+      title: 'Mapas Mentales (Mindmap)',
+      content: '<p>Los mapas mentales permiten organizar ideas jerárquicamente de forma visual e intuitiva.</p>',
+      mermaidCode: 'mindmap\n  root((Mermaid))\n    Diagramas\n      Flujo\n      Secuencia\n      Clases\n    Ventajas\n      Texto plano\n      Versionable\n      Open Source\n    Integraciones\n      GitHub\n      GitLab\n      Notion',
+      mermaidAltText: 'Mapa mental con Mermaid como nodo central y ramas de diagramas, ventajas e integraciones.',
+    },
+    {
+      id: 'timeline-diagram', type: 'diagram', section: 'Diagramas Avanzados',
+      title: 'Líneas de Tiempo (Timeline)',
+      content: '<p>Las líneas de tiempo visualizan eventos cronológicos, ideales para roadmaps y evolución de proyectos.</p>',
+      mermaidCode: 'timeline\n    title Historia de Mermaid\n    2014 : Creación por Knut Sveidqvist\n    2019 : Adopción masiva en GitHub\n    2021 : Soporte nativo en GitHub Markdown\n    2022 : Integración en Notion\n    2023 : Boom con IA generativa\n    2024 : Más de 70k estrellas',
+      mermaidAltText: 'Línea de tiempo mostrando la evolución de Mermaid desde 2014 hasta 2024.',
+    },
+    {
+      id: 'gitgraph-diagram', type: 'diagram', section: 'Diagramas Avanzados',
+      title: 'Diagramas Git (GitGraph)',
+      content: '<p>Visualizan estrategias de branching y flujos de trabajo en Git de forma clara.</p>',
+      mermaidCode: 'gitGraph\n    commit\n    commit\n    branch develop\n    checkout develop\n    commit\n    commit\n    branch feature\n    checkout feature\n    commit\n    checkout develop\n    merge feature\n    checkout main\n    merge develop\n    commit tag:"v1.0"',
+      mermaidAltText: 'Diagrama GitGraph mostrando flujo de ramas main, develop y feature.',
+    },
+    {
+      id: 'quadrant-diagram', type: 'diagram', section: 'Diagramas Avanzados',
+      title: 'Diagramas de Cuadrante',
+      content: '<p>Los diagramas de cuadrante permiten clasificar elementos en dos dimensiones, útiles para matrices de priorización.</p>',
+      mermaidCode: 'quadrantChart\n    title Priorización de Features\n    x-axis Bajo Esfuerzo --> Alto Esfuerzo\n    y-axis Bajo Impacto --> Alto Impacto\n    quadrant-1 Hacer primero\n    quadrant-2 Planificar\n    quadrant-3 Delegar\n    quadrant-4 Eliminar\n    Login social: [0.2, 0.8]\n    Dark mode: [0.3, 0.4]\n    Refactor DB: [0.8, 0.9]\n    Animaciones: [0.7, 0.2]',
+      mermaidAltText: 'Diagrama de cuadrante para priorización de features según esfuerzo e impacto.',
+    },
+    {
+      id: 'themes-config', type: 'content', section: 'Configuración y Temas',
+      title: 'Temas y Personalización',
+      content: '<p>Mermaid incluye temas predefinidos y permite personalización completa mediante directivas y variables CSS.</p>',
+      bulletPoints: [
+        'Temas incluidos: default, dark, forest, neutral, base',
+        'Directiva %%{init: {theme: "dark"}}%% al inicio del diagrama',
+        'Variables CSS personalizables: colores, fuentes, bordes',
+        'themeVariables permite override granular de cada elemento',
+        'Configuración global vía mermaid.initialize() en JavaScript',
+      ],
+    },
+    {
+      id: 'directives-config', type: 'content', section: 'Configuración y Temas',
+      title: 'Directivas y Configuración Avanzada',
+      content: '<p>Las directivas permiten controlar el comportamiento del renderizado directamente desde el código del diagrama.</p>',
+      bulletPoints: [
+        'securityLevel: strict, loose, antiscript, sandbox',
+        'flowchart: { curve: "basis" } para curvas suaves',
+        'sequence: { mirrorActors: false } para actores sin espejo',
+        'fontSize, fontFamily y logLevel configurables',
+        'Directivas inline con %%{init: {...}}%%',
+        'Estilos por nodo con classDef y style',
+      ],
+      mermaidCode: 'graph LR\n    A[Normal]:::blue --> B[Alerta]:::red\n    B --> C[OK]:::green\n    classDef blue fill:#264653,stroke:#2a9d8f,color:#fff\n    classDef red fill:#e76f51,stroke:#f4a261,color:#fff\n    classDef green fill:#2a9d8f,stroke:#264653,color:#fff',
+      mermaidAltText: 'Diagrama con nodos coloreados usando classDef personalizado.',
+    },
+    {
+      id: 'editor-playground', type: 'interactive', section: 'Editor Interactivo',
+      title: 'Experimenta con Mermaid',
+      content: '<p>Modifica el código y observa cómo el diagrama se actualiza en tiempo real.</p>',
+      mermaidCode: 'graph LR\n    A[Tu Idea] --> B[Código Mermaid]\n    B --> C[Diagrama Visual]\n    C --> D{¿Te gusta?}\n    D -->|Sí| E[Comparte]\n    D -->|No| A',
+      mermaidAltText: 'Diagrama editable: flujo iterativo de idea a diagrama.',
+      isInteractive: true,
+    },
+
+    {
+      id: 'comparison', type: 'content', section: 'Comparativa',
+      title: 'Mermaid vs Otras Herramientas',
+      content: '<p>¿Cómo se compara Mermaid con las alternativas más populares del mercado?</p>',
+      bulletPoints: [
+        'Visio: potente pero propietario, costoso y no versionable',
+        'Lucidchart: colaborativo pero requiere cuenta y es SaaS',
+        'Draw.io: gratuito y visual, pero genera XML no legible',
+        'PlantUML: similar en concepto, pero sintaxis más verbosa',
+        'D2: moderno y prometedor, pero menor ecosistema',
+        'Mermaid: gratuito, integrado, legible y compatible con IA',
+      ],
+    },
+    {
+      id: 'comparison-table', type: 'content', section: 'Comparativa',
+      title: 'Tabla Comparativa Detallada',
+      content: '<p>Evaluación de criterios clave para elegir una herramienta de diagramación en equipos de desarrollo.</p>',
+      bulletPoints: [
+        'Costo: Mermaid ✓ gratuito | Visio ✗ licencia | Lucidchart ✗ suscripción',
+        'Versionable en Git: Mermaid ✓ | Draw.io ~ (XML) | Visio ✗',
+        'Integración Markdown: Mermaid ✓ nativo | PlantUML ~ plugins | Otros ✗',
+        'Curva de aprendizaje: Mermaid ✓ baja | PlantUML ~ media | D2 ~ media',
+        'Generación con IA: Mermaid ✓ excelente | PlantUML ~ buena | Visio ✗',
+        'Tipos de diagramas: Mermaid 13+ | PlantUML 15+ | Draw.io ilimitado',
+      ],
+    },
+    {
+      id: 'use-case-docs', type: 'content', section: 'Casos de Uso',
+      title: 'Documentación Técnica y README',
+      content: '<p>Mermaid es el estándar para diagramas en documentación técnica.</p>',
+      bulletPoints: [
+        'GitHub renderiza Mermaid nativamente en Markdown',
+        'Los diagramas se actualizan con cada commit',
+        'Cambios en diagramas son diffs de texto legibles',
+        'Ideal para documentar arquitecturas y APIs',
+      ],
+    },
+    {
+      id: 'use-case-ai', type: 'content', section: 'Casos de Uso',
+      title: 'Generación con Inteligencia Artificial',
+      content: '<p>Los LLMs pueden generar diagramas Mermaid desde lenguaje natural.</p>',
+      bulletPoints: [
+        'Describe tu arquitectura y obtén un diagrama al instante',
+        'Los LLMs entienden la sintaxis de Mermaid',
+        'Automatiza documentación de sistemas existentes',
+        'Integración en flujos de desarrollo asistido por IA',
+      ],
+    },
+    {
+      id: 'use-case-platforms', type: 'content', section: 'Casos de Uso',
+      title: 'Plataformas Colaborativas',
+      content: '<p>Múltiples plataformas soportan Mermaid de forma nativa.</p>',
+      bulletPoints: [
+        'GitHub: renderizado nativo en issues, PRs y wikis',
+        'GitLab: soporte integrado en Markdown',
+        'Notion: bloques de código Mermaid con vista previa',
+        'Confluence, Docusaurus, MkDocs vía plugins',
+      ],
+    },
+    {
+      id: 'use-case-cicd', type: 'content', section: 'Casos de Uso',
+      title: 'CI/CD y Arquitectura de Despliegue',
+      content: '<p>Ideal para documentar pipelines y arquitecturas de despliegue.</p>',
+      mermaidCode: 'graph LR\n    A[Commit] --> B[Build]\n    B --> C[Test]\n    C --> D{¿OK?}\n    D -->|Sí| E[Deploy Staging]\n    E --> F[Tests E2E]\n    F --> G{¿E2E OK?}\n    G -->|Sí| H[Producción]\n    G -->|No| I[Rollback]\n    D -->|No| J[Notificar]',
+      mermaidAltText: 'Pipeline CI/CD con build, test, deploy y rollback.',
+    },
+    {
+      id: 'use-case-onboarding', type: 'content', section: 'Casos de Uso',
+      title: 'Onboarding de Desarrolladores',
+      content: '<p>Mermaid acelera la incorporación de nuevos miembros al equipo al hacer visible la arquitectura del sistema.</p>',
+      bulletPoints: [
+        'Diagramas de arquitectura en el README del repositorio',
+        'Flujos de negocio documentados junto al código',
+        'Mapas de dependencias entre microservicios',
+        'Guías visuales de procesos internos (deploy, hotfix, release)',
+        'Reducción del tiempo de onboarding en un 40-60%',
+      ],
+    },
+    {
+      id: 'use-case-architecture', type: 'diagram', section: 'Casos de Uso',
+      title: 'Documentación de Arquitectura',
+      content: '<p>Ejemplo real: arquitectura de microservicios documentada con Mermaid.</p>',
+      mermaidCode: 'graph TD\n    Client[Cliente Web] --> Gateway[API Gateway]\n    Gateway --> Auth[Servicio Auth]\n    Gateway --> Users[Servicio Usuarios]\n    Gateway --> Orders[Servicio Pedidos]\n    Gateway --> Notify[Servicio Notificaciones]\n    Users --> DB1[(PostgreSQL)]\n    Orders --> DB2[(MongoDB)]\n    Orders --> Queue[Cola de Mensajes]\n    Queue --> Notify\n    Notify --> Email[SMTP]\n    Notify --> Push[Firebase]',
+      mermaidAltText: 'Arquitectura de microservicios con API Gateway, servicios y bases de datos.',
+    },
+    {
+      id: 'best-practices', type: 'content', section: 'Mejores Prácticas',
+      title: 'Mejores Prácticas con Mermaid',
+      content: '<p>Consejos para crear diagramas efectivos, mantenibles y profesionales.</p>',
+      bulletPoints: [
+        'Mantén los diagramas simples: máximo 10-15 nodos por diagrama',
+        'Usa IDs descriptivos: "authService" en vez de "A"',
+        'Divide diagramas complejos en subdiagramas por contexto',
+        'Incluye siempre un título o descripción del diagrama',
+        'Versiona los diagramas junto al código que documentan',
+        'Revisa los diagramas en cada PR que modifique la arquitectura',
+      ],
+    },
+    {
+      id: 'best-practices-naming', type: 'content', section: 'Mejores Prácticas',
+      title: 'Convenciones de Nombrado',
+      content: '<p>Un buen nombrado hace que los diagramas sean autoexplicativos y fáciles de mantener.</p>',
+      bulletPoints: [
+        'Nodos: usar sustantivos descriptivos (UserService, PaymentGateway)',
+        'Conexiones: etiquetar con la acción (envía, procesa, valida)',
+        'Subgrafos: agrupar por dominio o bounded context',
+        'Archivos: nombrar como el componente (auth-flow.mmd, db-schema.mmd)',
+        'Comentarios: usar %% para explicar decisiones de diseño',
+      ],
+    },
+    {
+      id: 'best-practices-maintenance', type: 'content', section: 'Mejores Prácticas',
+      title: 'Mantenimiento y Gobernanza',
+      content: '<p>Estrategias para mantener los diagramas actualizados y útiles a largo plazo.</p>',
+      bulletPoints: [
+        'Regla: si cambias la arquitectura, actualiza el diagrama en el mismo PR',
+        'Automatiza validación de sintaxis Mermaid en CI (mermaid-cli)',
+        'Genera imágenes PNG/SVG automáticamente para wikis',
+        'Revisa diagramas trimestralmente para detectar drift',
+        'Designa un "dueño" de la documentación visual por equipo',
+        'Usa linting: mermaid-lint para detectar problemas de estilo',
+      ],
+    },
+    {
+      id: 'integration-git', type: 'content', section: 'Mejores Prácticas',
+      title: 'Integración con Git y CI/CD',
+      content: '<p>Cómo integrar Mermaid en tu flujo de trabajo de desarrollo para máximo beneficio.</p>',
+      bulletPoints: [
+        'Pre-commit hooks: validar sintaxis antes de commitear',
+        'GitHub Actions: generar SVG/PNG en cada push',
+        'Markdown preview: VS Code + extensión Mermaid Preview',
+        'Documentación automática: Docusaurus/MkDocs con plugin Mermaid',
+        'Code review: incluir diagramas en la descripción del PR',
+        'mermaid-cli (mmdc): renderizar desde línea de comandos',
+      ],
+    },
+    {
+      id: 'tips-performance', type: 'content', section: 'Mejores Prácticas',
+      title: 'Rendimiento y Limitaciones',
+      content: '<p>Consideraciones importantes para usar Mermaid de forma efectiva en proyectos grandes.</p>',
+      bulletPoints: [
+        'Diagramas muy grandes (50+ nodos) pueden ser lentos de renderizar',
+        'Usar lazy loading para páginas con múltiples diagramas',
+        'Preferir SVG sobre PNG para mejor calidad y accesibilidad',
+        'Algunos tipos de diagrama no soportan todas las features (ej: links en pie)',
+        'El renderizado depende del navegador: probar en los principales',
+        'Alternativa para diagramas enormes: dividir en vistas de alto y bajo nivel',
+      ],
+    },
+    {
+      id: 'qa-session', type: 'content', section: 'Preguntas',
+      title: 'Sesión de Preguntas y Respuestas',
+      content: '<p>Es momento de resolver dudas, discutir casos específicos de su equipo y explorar cómo aplicar Mermaid en sus proyectos.</p>',
+      bulletPoints: [
+        '¿Qué tipo de diagrama usarían para su proyecto actual?',
+        '¿Cómo integrarían Mermaid en su flujo de documentación?',
+        '¿Qué limitaciones ven para su caso de uso?',
+        '¿Les interesa la generación automática con IA?',
+        '¿Tienen procesos que se beneficiarían de documentación visual?',
+      ],
+    },
+    {
+      id: 'closing', type: 'closing',
+      title: 'Resumen y Recursos',
+      content: '<p>Mermaid transforma la documentación de software. Su sintaxis basada en texto y compatibilidad con IA lo hacen esencial.</p>',
+      bulletPoints: [
+        'Convierte texto plano en diagramas profesionales',
+        'Soporta más de 13 tipos de diagramas',
+        'Se integra en GitHub, GitLab y Notion',
+        'Los modelos de IA generan Mermaid automáticamente',
+        'Es versionable, colaborativo y open source',
+      ],
+      resources: [
+        'https://mermaid.js.org — Documentación oficial',
+        'https://mermaid.live — Editor en línea',
+        'https://github.com/mermaid-js/mermaid — Repositorio GitHub',
+      ],
+    },
+  ];
+
+  // ============================================================
+  // MERMAID RENDERER
+  // ============================================================
+  const MermaidRenderer = {
+    _idCounter: 0,
+    _initialized: false,
+
+    async initialize(config) {
+      if (this._initialized) return;
+      try {
+        mermaid.initialize({
+          startOnLoad: false,
+          theme: 'dark',
+          securityLevel: 'loose',
+          fontFamily: '"Fira Code", "Cascadia Code", monospace',
+          ...config,
+        });
+        this._initialized = true;
+      } catch (err) {
+        console.error('Error al inicializar Mermaid.js:', err);
+      }
+    },
+
+    _generateId() {
+      this._idCounter += 1;
+      return 'mmd-' + this._idCounter + '-' + Date.now();
+    },
+
+    async render(id, code) {
+      if (!this._initialized) return { success: false, error: 'Mermaid no inicializado' };
+      const uid = id || this._generateId();
+      try {
+        const { svg } = await mermaid.render(uid, code.trim());
+        return { success: true, svg: svg };
+      } catch (err) {
+        return { success: false, error: 'Error de sintaxis: ' + (err.message || err) };
+      }
+    },
+
+    async renderAllInContainer(container) {
+      if (!container) return;
+      const els = container.querySelectorAll('[data-mermaid]');
+      for (const el of els) {
+        const code = el.getAttribute('data-mermaid');
+        if (!code) continue;
+        const result = await this.render(this._generateId(), code);
+        if (result.success) {
+          el.innerHTML = result.svg;
+          const alt = el.getAttribute('data-mermaid-alt');
+          const svg = el.querySelector('svg');
+          if (svg && alt) { svg.setAttribute('role', 'img'); svg.setAttribute('aria-label', alt); }
+        } else {
+          el.innerHTML = '<div class="mermaid-error" role="alert">' + escapeHtml(result.error) + '</div>';
+        }
+      }
+    }
+  };
+
+  // ============================================================
+  // NAVIGATOR
+  // ============================================================
+  function createNavigator(totalSlides, onSlideChange) {
+    let currentIndex = 0;
+    const btnPrev = document.getElementById('btn-previous');
+    const btnNext = document.getElementById('btn-next');
+    const progressText = document.getElementById('progress-text');
+    const progressBar = document.getElementById('progress-bar-fill');
+
+    function canGoNext() { return currentIndex < totalSlides - 1; }
+    function canGoPrev() { return currentIndex > 0; }
+
+    function updateButtons() {
+      if (btnPrev) btnPrev.disabled = !canGoPrev();
+      if (btnNext) btnNext.disabled = !canGoNext();
+    }
+
+    function updateProgress() {
+      const display = (currentIndex + 1) + ' / ' + totalSlides;
+      if (progressText) progressText.textContent = display;
+      if (progressBar) { progressBar.value = currentIndex + 1; progressBar.max = totalSlides; }
+    }
+
+    function emitChange(direction) {
+      updateButtons();
+      updateProgress();
+      onSlideChange(currentIndex, direction);
+    }
+
+    function next() { if (canGoNext()) { currentIndex++; emitChange('forward'); } }
+    function previous() { if (canGoPrev()) { currentIndex--; emitChange('backward'); } }
+    function goTo(index) {
+      if (index < 0 || index >= totalSlides || index === currentIndex) return;
+      const dir = index > currentIndex ? 'forward' : 'backward';
+      currentIndex = index;
+      emitChange(dir);
+    }
+
+    // Keyboard
+    document.addEventListener('keydown', function(e) {
+      const tag = (e.target.tagName || '').toLowerCase();
+      if (tag === 'textarea' || tag === 'input' || e.target.isContentEditable) return;
+      if (e.key === 'ArrowRight') { e.preventDefault(); next(); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); previous(); }
+    });
+
+    // Buttons
+    if (btnPrev) btnPrev.addEventListener('click', previous);
+    if (btnNext) btnNext.addEventListener('click', next);
+
+    updateButtons();
+    updateProgress();
+
+    return { next: next, previous: previous, goTo: goTo, canGoNext: canGoNext, canGoPrev: canGoPrev, updateProgress: updateProgress, getCurrentIndex: function() { return currentIndex; } };
+  }
+
+  // ============================================================
+  // HELPERS
+  // ============================================================
+  function escapeHtml(str) {
+    if (!str) return '';
+    var d = document.createElement('div');
+    d.textContent = str;
+    return d.innerHTML;
+  }
+
+  function escapeAttr(str) {
+    if (!str) return '';
+    return str.replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/'/g,'&#39;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  function highlightSyntax(code) {
+    if (!code) return '';
+    var e = escapeHtml(code);
+    e = e.replace(/\b(graph|flowchart|sequenceDiagram|classDiagram|stateDiagram-v2|stateDiagram|gantt|erDiagram|pie|gitGraph|journey|mindmap)\b/g, '<span class="syntax-keyword">$1</span>');
+    e = e.replace(/\b(subgraph|end|participant|actor|class|section|title|dateFormat|loop|alt|else|opt|par|note|over|activate|deactivate)\b/g, '<span class="syntax-structure">$1</span>');
+    e = e.replace(/(--&gt;|---|-\.-&gt;|==&gt;|--&gt;\|[^|]*\||&lt;\|--|--o|--x)/g, '<span class="syntax-arrow">$1</span>');
+    return e;
+  }
+
+  function buildBullets(points) {
+    if (!points || !points.length) return '';
+    return '<ul class="bullet-list">' + points.map(function(p) {
+      return '<li class="bullet-item animate-in">' + escapeHtml(p) + '</li>';
+    }).join('') + '</ul>';
+  }
+
+  // ============================================================
+  // SLIDE RENDERER
+  // ============================================================
+  function buildSlideHtml(slide) {
+    switch (slide.type) {
+      case 'title':
+        return '<div class="slide__inner slide__inner--title">' +
+          '<h1 class="slide__title slide__title--hero animate-in">' + escapeHtml(slide.title) + '</h1>' +
+          (slide.subtitle ? '<p class="slide__subtitle animate-in">' + escapeHtml(slide.subtitle) + '</p>' : '') +
+          (slide.content ? '<div class="slide__body animate-in">' + slide.content + '</div>' : '') +
+          '</div>';
+
+      case 'index':
+        var items = (slide.indexItems || []).map(function(item, i) {
+          return '<li class="index-item animate-in"><a href="#" class="index-link" data-target-id="' + escapeAttr(item.targetId) + '" tabindex="0"><span class="index-number">' + (i+1) + '</span><span class="index-label">' + escapeHtml(item.label) + '</span></a></li>';
+        }).join('');
+        return '<div class="slide__inner slide__inner--index"><h2 class="slide__title animate-in">' + escapeHtml(slide.title) + '</h2><ol class="index-list">' + items + '</ol></div>';
+
+      case 'diagram':
+        return '<div class="slide__inner slide__inner--diagram">' +
+          '<div class="slide__text-panel">' +
+          (slide.section ? '<span class="slide__section-badge animate-in">' + escapeHtml(slide.section) + '</span>' : '') +
+          '<h2 class="slide__title animate-in">' + escapeHtml(slide.title) + '</h2>' +
+          (slide.content ? '<div class="slide__body animate-in">' + slide.content + '</div>' : '') +
+          '</div>' +
+          '<div class="slide__diagram-area animate-in">' +
+          '<div class="code-panel"><div class="code-panel__header">Código Mermaid</div><pre class="code-block"><code>' + highlightSyntax(slide.mermaidCode) + '</code></pre></div>' +
+          '<div class="diagram-preview" data-mermaid="' + escapeAttr(slide.mermaidCode) + '" data-mermaid-alt="' + escapeAttr(slide.mermaidAltText || '') + '"></div>' +
+          '</div></div>';
+
+      case 'interactive':
+        return '<div class="slide__inner slide__inner--interactive">' +
+          '<div class="slide__header">' +
+          (slide.section ? '<span class="slide__section-badge animate-in">' + escapeHtml(slide.section) + '</span>' : '') +
+          '<h2 class="slide__title animate-in">' + escapeHtml(slide.title) + '</h2>' +
+          (slide.content ? '<div class="slide__body animate-in">' + slide.content + '</div>' : '') +
+          '</div>' +
+          '<div class="interactive-editor-mount animate-in"></div>' +
+          '</div>';
+
+      case 'closing':
+        var res = (slide.resources || []).map(function(r) {
+          var parts = r.split(' — ');
+          var url = parts[0].trim();
+          var label = parts.length > 1 ? parts[1].trim() : url;
+          return '<li class="resource-item animate-in"><a href="' + escapeAttr(url) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(url) + '</a> — ' + escapeHtml(label) + '</li>';
+        }).join('');
+        return '<div class="slide__inner slide__inner--closing">' +
+          '<h2 class="slide__title slide__title--hero animate-in">' + escapeHtml(slide.title) + '</h2>' +
+          (slide.content ? '<div class="slide__body animate-in">' + slide.content + '</div>' : '') +
+          buildBullets(slide.bulletPoints) +
+          (res ? '<div class="resources-section animate-in"><h3 class="resources-title">Recursos</h3><ul class="resources-list">' + res + '</ul></div>' : '') +
+          '</div>';
+
+      default: // content
+        var hasDiagram = !!slide.mermaidCode;
+        var left = '<div class="slide__text-panel">' +
+          (slide.section ? '<span class="slide__section-badge animate-in">' + escapeHtml(slide.section) + '</span>' : '') +
+          '<h2 class="slide__title animate-in">' + escapeHtml(slide.title) + '</h2>' +
+          (slide.content ? '<div class="slide__body animate-in">' + slide.content + '</div>' : '') +
+          buildBullets(slide.bulletPoints) +
+          '</div>';
+        var right = '';
+        if (hasDiagram) {
+          right = '<div class="slide__diagram-panel animate-in">' +
+            '<div class="code-panel"><pre class="code-block"><code>' + highlightSyntax(slide.mermaidCode) + '</code></pre></div>' +
+            '<div class="diagram-preview" data-mermaid="' + escapeAttr(slide.mermaidCode) + '" data-mermaid-alt="' + escapeAttr(slide.mermaidAltText || '') + '"></div>' +
+            '</div>';
+        }
+        return '<div class="slide__inner' + (hasDiagram ? ' slide__inner--split' : '') + '">' + left + right + '</div>';
+    }
+  }
+
+  // ============================================================
+  // INTERACTIVE EDITOR
+  // ============================================================
+  var editorState = { mounted: false, textarea: null, preview: null, initialCode: '', timer: null };
+
+  function destroyEditor() {
+    if (editorState.timer) clearTimeout(editorState.timer);
+    editorState.mounted = false;
+    editorState.textarea = null;
+    editorState.preview = null;
+  }
+
+  async function mountEditor(container, code) {
+    destroyEditor();
+    editorState.initialCode = code;
+    editorState.mounted = true;
+    container.innerHTML = '';
+    container.classList.add('interactive-editor');
+
+    var editorPanel = document.createElement('div');
+    editorPanel.className = 'editor-panel';
+    editorPanel.innerHTML = '<div class="editor-panel__header"><span class="editor-panel__title">Editor de Código Mermaid</span><button type="button" class="editor-restore-btn" aria-label="Restaurar código original">&#8634; Restaurar</button></div>';
+
+    var ta = document.createElement('textarea');
+    ta.className = 'editor-textarea';
+    ta.value = code;
+    ta.setAttribute('spellcheck', 'false');
+    ta.setAttribute('rows', '12');
+    ta.setAttribute('aria-label', 'Editor de código Mermaid');
+    editorPanel.appendChild(ta);
+    editorState.textarea = ta;
+
+    var previewPanel = document.createElement('div');
+    previewPanel.className = 'preview-panel';
+    previewPanel.innerHTML = '<div class="preview-panel__header">Vista Previa</div>';
+    var previewContent = document.createElement('div');
+    previewContent.className = 'preview-panel__content';
+    previewPanel.appendChild(previewContent);
+    editorState.preview = previewContent;
+
+    container.appendChild(editorPanel);
+    container.appendChild(previewPanel);
+
+    // Render initial
+    var result = await MermaidRenderer.render(null, code);
+    if (result.success) { previewContent.innerHTML = result.svg; }
+    else { previewContent.innerHTML = '<div class="mermaid-error">' + escapeHtml(result.error) + '</div>'; }
+
+    // Input with debounce
+    ta.addEventListener('input', function() {
+      if (editorState.timer) clearTimeout(editorState.timer);
+      editorState.timer = setTimeout(async function() {
+        var c = ta.value || '';
+        if (!c.trim()) { previewContent.innerHTML = '<div class="editor-placeholder">Escribe código Mermaid</div>'; return; }
+        var r = await MermaidRenderer.render(null, c);
+        if (r.success) { previewContent.innerHTML = r.svg; previewContent.classList.remove('preview-panel__content--error'); }
+        else { previewContent.innerHTML = '<div class="mermaid-error">' + escapeHtml(r.error) + '</div>'; previewContent.classList.add('preview-panel__content--error'); }
+      }, 300);
+    });
+
+    // Restore button
+    var restoreBtn = editorPanel.querySelector('.editor-restore-btn');
+    if (restoreBtn) {
+      restoreBtn.addEventListener('click', async function() {
+        ta.value = editorState.initialCode;
+        var r = await MermaidRenderer.render(null, editorState.initialCode);
+        if (r.success) { previewContent.innerHTML = r.svg; previewContent.classList.remove('preview-panel__content--error'); }
+        else { previewContent.innerHTML = '<div class="mermaid-error">' + escapeHtml(r.error) + '</div>'; }
+      });
+    }
+  }
+
+  // ============================================================
+  // ACCESSIBILITY
+  // ============================================================
+  var liveRegion = null;
+
+  function setupLiveRegion(container) {
+    var region = document.createElement('div');
+    region.id = 'slide-announcer';
+    region.setAttribute('aria-live', 'polite');
+    region.setAttribute('aria-atomic', 'true');
+    region.setAttribute('role', 'status');
+    region.className = 'sr-only';
+    container.appendChild(region);
+    liveRegion = region;
+  }
+
+  function announceSlide(title, index, total) {
+    if (!liveRegion) return;
+    liveRegion.textContent = '';
+    requestAnimationFrame(function() {
+      if (liveRegion) liveRegion.textContent = 'Diapositiva ' + (index + 1) + ' de ' + total + ': ' + title;
+    });
+  }
+
+  function setupNavAria(prevBtn, nextBtn, canPrev, canNext) {
+    if (prevBtn) { prevBtn.setAttribute('aria-label', 'Diapositiva anterior'); prevBtn.setAttribute('aria-disabled', String(!canPrev)); }
+    if (nextBtn) { nextBtn.setAttribute('aria-label', 'Siguiente diapositiva'); nextBtn.setAttribute('aria-disabled', String(!canNext)); }
+  }
+
+  // ============================================================
+  // MAIN INIT
+  // ============================================================
+  document.addEventListener('DOMContentLoaded', async function() {
+    var container = document.getElementById('slide-container');
+    var presentation = document.getElementById('presentation');
+    var btnPrev = document.getElementById('btn-previous');
+    var btnNext = document.getElementById('btn-next');
+
+    if (!container || !presentation) return;
+
+    await MermaidRenderer.initialize({ theme: 'dark' });
+    setupLiveRegion(presentation);
+
+    // Build slide id -> index map
+    var idMap = {};
+    slides.forEach(function(s, i) { idMap[s.id] = i; });
+
+    var slideNav; // forward declaration
+
+    async function renderSlide(index, direction) {
+      var slide = slides[index];
+      if (!slide) return;
+
+      destroyEditor();
+
+      var wrapper = document.createElement('div');
+      wrapper.className = 'slide slide--' + slide.type;
+      wrapper.innerHTML = buildSlideHtml(slide);
+
+      var enterClass = direction === 'backward' ? 'slide-enter-backward' : 'slide-enter-forward';
+      wrapper.classList.add(enterClass);
+
+      container.innerHTML = '';
+      container.appendChild(wrapper);
+
+      // Index links
+      if (slide.type === 'index' && slideNav) {
+        wrapper.querySelectorAll('.index-link').forEach(function(link) {
+          link.addEventListener('click', function(e) {
+            e.preventDefault();
+            var tid = link.getAttribute('data-target-id');
+            if (tid && idMap[tid] !== undefined) slideNav.goTo(idMap[tid]);
+          });
+        });
+      }
+
+      // Render mermaid diagrams
+      if (slide.mermaidCode && !slide.isInteractive) {
+        await MermaidRenderer.renderAllInContainer(wrapper);
+      }
+
+      // Mount interactive editor
+      if (slide.isInteractive && slide.mermaidCode) {
+        var mount = wrapper.querySelector('.interactive-editor-mount');
+        if (mount) await mountEditor(mount, slide.mermaidCode);
+      }
+
+      // Animate in
+      requestAnimationFrame(function() {
+        wrapper.classList.remove(enterClass);
+        wrapper.classList.add('slide-active');
+        var animEls = wrapper.querySelectorAll('.animate-in');
+        animEls.forEach(function(el, i) {
+          el.style.animationDelay = (i * 100) + 'ms';
+          el.classList.add('animate-in--active');
+        });
+      });
+
+      announceSlide(slide.title, index, slides.length);
+      setupNavAria(btnPrev, btnNext, slideNav ? slideNav.canGoPrev() : false, slideNav ? slideNav.canGoNext() : true);
+    }
+
+    slideNav = createNavigator(slides.length, function(index, direction) {
+      renderSlide(index, direction);
+    });
+
+    // ── Touch/Swipe support para móvil ──────────────
+    var touchStartX = 0;
+    var touchStartY = 0;
+    var touchEndX = 0;
+    var touchEndY = 0;
+    var isSwiping = false;
+
+    container.addEventListener('touchstart', function(e) {
+      touchStartX = e.changedTouches[0].screenX;
+      touchStartY = e.changedTouches[0].screenY;
+      isSwiping = true;
+    }, { passive: true });
+
+    container.addEventListener('touchend', function(e) {
+      if (!isSwiping) return;
+      touchEndX = e.changedTouches[0].screenX;
+      touchEndY = e.changedTouches[0].screenY;
+      var diffX = touchStartX - touchEndX;
+      var diffY = touchStartY - touchEndY;
+      // Solo swipe horizontal si es mayor que vertical
+      if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
+        if (diffX > 0) { slideNav.next(); }
+        else { slideNav.previous(); }
+      }
+      isSwiping = false;
+    }, { passive: true });
+
+    // Render first slide
+    await renderSlide(0, 'forward');
+  });
+  </script>
+</body>
+</html>

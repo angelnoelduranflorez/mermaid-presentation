@@ -1,0 +1,1130 @@
+/* ==========================================================================
+   Presentación Dinámica sobre Mermaid — Estilos Globales
+   Tema oscuro con propiedades CSS personalizadas + animaciones dinámicas
+   WCAG 2.1 AA: contraste mínimo 4.5:1
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Propiedades CSS Personalizadas (Custom Properties)
+   -------------------------------------------------------------------------- */
+:root {
+  /* Fondo */
+  --color-bg-primary: #0f1117;
+  --color-bg-secondary: #1a1d2e;
+  --color-bg-surface: #232738;
+
+  /* Texto */
+  --color-text-primary: #e8eaf0;
+  --color-text-secondary: #a8adc0;
+  --color-text-muted: #7b82a0;
+
+  /* Acentos */
+  --color-accent: #6ea8fe;
+  --color-accent-hover: #9ec5fe;
+  --color-accent-subtle: #2a3a5c;
+  --color-accent-glow: rgba(110, 168, 254, 0.3);
+
+  /* Semánticos */
+  --color-success: #75d9a0;
+  --color-error: #f87171;
+  --color-warning: #fbbf24;
+
+  /* Gradientes dinámicos */
+  --gradient-accent: linear-gradient(135deg, #6ea8fe 0%, #a78bfa 50%, #f472b6 100%);
+  --gradient-bg: radial-gradient(ellipse at 20% 50%, rgba(110, 168, 254, 0.08) 0%, transparent 50%),
+                 radial-gradient(ellipse at 80% 20%, rgba(167, 139, 250, 0.06) 0%, transparent 50%),
+                 radial-gradient(ellipse at 50% 80%, rgba(244, 114, 182, 0.04) 0%, transparent 50%);
+
+  /* Bordes y sombras */
+  --color-border: #2e3348;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 20px rgba(110, 168, 254, 0.15);
+
+  /* Tipografía */
+  --font-sans: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-mono: 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+  --font-size-base: 1rem;
+  --font-size-sm: 0.875rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 1.5rem;
+  --font-size-2xl: 2rem;
+  --font-size-3xl: 2.75rem;
+  --line-height-base: 1.6;
+
+  /* Espaciado */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+
+  /* Transiciones */
+  --transition-fast: 150ms ease;
+  --transition-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-spring: 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Layout */
+  --nav-height: 64px;
+  --border-radius: 8px;
+}
+
+/* --------------------------------------------------------------------------
+   2. Reset y Tipografía Base
+   -------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-primary);
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* --------------------------------------------------------------------------
+   3. Contenedor Principal — con fondo animado
+   -------------------------------------------------------------------------- */
+#presentation {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Fondo con gradientes animados */
+#presentation::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gradient-bg);
+  animation: bgShift 20s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes bgShift {
+  0% { opacity: 0.6; transform: scale(1) rotate(0deg); }
+  50% { opacity: 1; transform: scale(1.05) rotate(1deg); }
+  100% { opacity: 0.8; transform: scale(1) rotate(-1deg); }
+}
+
+/* Partículas flotantes */
+.particles-canvas {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.6;
+}
+
+/* --------------------------------------------------------------------------
+   4. Contenedor de Diapositivas
+   -------------------------------------------------------------------------- */
+#slide-container {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xl);
+  z-index: 1;
+}
+
+/* --------------------------------------------------------------------------
+   5. Barra de Navegación — con efecto glassmorphism
+   -------------------------------------------------------------------------- */
+.navigation-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  height: var(--nav-height);
+  padding: 0 var(--space-xl);
+  background: rgba(26, 29, 46, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(110, 168, 254, 0.1);
+  flex-shrink: 0;
+  z-index: 2;
+}
+
+/* Botones de navegación */
+.navigation-bar button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-lg);
+  font-family: var(--font-sans);
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  color: var(--color-accent);
+  background-color: transparent;
+  border: 2px solid var(--color-accent);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  white-space: nowrap;
+  min-height: 44px;
+  position: relative;
+  overflow: hidden;
+}
+
+.navigation-bar button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gradient-accent);
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+}
+
+.navigation-bar button:hover:not(:disabled) {
+  border-color: transparent;
+  color: var(--color-bg-primary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-glow);
+}
+
+.navigation-bar button:hover:not(:disabled)::before {
+  opacity: 1;
+}
+
+.navigation-bar button span,
+.navigation-bar button {
+  position: relative;
+  z-index: 1;
+}
+
+.navigation-bar button:active:not(:disabled) {
+  transform: translateY(0) scale(0.97);
+}
+
+.navigation-bar button:focus-visible {
+  outline: 3px solid var(--color-accent-hover);
+  outline-offset: 2px;
+}
+
+.navigation-bar button:disabled {
+  color: var(--color-text-muted);
+  border-color: var(--color-border);
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+/* --------------------------------------------------------------------------
+   6. Indicador de Progreso — con gradiente animado
+   -------------------------------------------------------------------------- */
+.progress-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  min-width: 140px;
+}
+
+#progress-text {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  overflow: hidden;
+  appearance: none;
+  -webkit-appearance: none;
+  border: none;
+  background-color: var(--color-bg-surface);
+}
+
+.progress-bar::-webkit-progress-bar {
+  background-color: var(--color-bg-surface);
+  border-radius: 2px;
+}
+
+.progress-bar::-webkit-progress-value {
+  background: var(--gradient-accent);
+  border-radius: 2px;
+  transition: width 400ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.progress-bar::-moz-progress-bar {
+  background: var(--gradient-accent);
+  border-radius: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   7. Utilidades de Accesibilidad
+   -------------------------------------------------------------------------- */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-accent-hover);
+  outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   8. Responsivo
+   -------------------------------------------------------------------------- */
+@media (max-width: 767px) {
+  :root {
+    --nav-height: 56px;
+    --space-xl: 1rem;
+    --font-size-3xl: 2rem;
+    --font-size-2xl: 1.5rem;
+  }
+
+  #slide-container {
+    padding: var(--space-md);
+  }
+
+  .navigation-bar {
+    padding: 0 var(--space-md);
+  }
+
+  .navigation-bar button {
+    padding: var(--space-sm) var(--space-md);
+    font-size: var(--font-size-sm);
+  }
+
+  .progress-indicator {
+    min-width: 80px;
+  }
+}
+
+@media (min-width: 1200px) {
+  #slide-container {
+    padding: var(--space-2xl) 4rem;
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   9. Diapositivas — Transiciones mejoradas con 3D
+   -------------------------------------------------------------------------- */
+.slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xl);
+  opacity: 0;
+  will-change: transform, opacity;
+  perspective: 1000px;
+}
+
+.slide-enter-forward {
+  opacity: 0;
+  transform: translateX(80px) scale(0.95) rotateY(-2deg);
+  transition: transform 450ms cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 350ms ease;
+}
+
+.slide-enter-backward {
+  opacity: 0;
+  transform: translateX(-80px) scale(0.95) rotateY(2deg);
+  transition: transform 450ms cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 350ms ease;
+}
+
+.slide-exit-forward {
+  opacity: 0;
+  transform: translateX(-80px) scale(0.95);
+  transition: transform 350ms ease, opacity 250ms ease;
+}
+
+.slide-exit-backward {
+  opacity: 0;
+  transform: translateX(80px) scale(0.95);
+  transition: transform 350ms ease, opacity 250ms ease;
+}
+
+.slide-active {
+  opacity: 1;
+  transform: translateX(0) scale(1) rotateY(0);
+  transition: transform 450ms cubic-bezier(0.34, 1.56, 0.64, 1),
+              opacity 350ms ease;
+}
+
+/* --------------------------------------------------------------------------
+   10. Layouts Internos por Tipo de Diapositiva
+   -------------------------------------------------------------------------- */
+.slide__inner {
+  width: 100%;
+  max-width: 1100px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.slide__inner--title {
+  align-items: center;
+  text-align: center;
+  gap: var(--space-md);
+}
+
+.slide__inner--index {
+  align-items: center;
+  gap: var(--space-xl);
+}
+
+.slide__inner--split {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: var(--space-xl);
+}
+
+.slide__inner--split .slide__text-panel {
+  flex: 1;
+  min-width: 0;
+}
+
+.slide__inner--split .slide__diagram-panel {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.slide__inner--diagram {
+  gap: var(--space-lg);
+}
+
+.slide__diagram-area {
+  display: flex;
+  gap: var(--space-lg);
+  width: 100%;
+  min-height: 200px;
+}
+
+.slide__diagram-area .code-panel {
+  flex: 1;
+  min-width: 0;
+}
+
+.slide__diagram-area .diagram-preview {
+  flex: 1;
+  min-width: 0;
+}
+
+.slide__inner--interactive {
+  gap: var(--space-lg);
+  height: 100%;
+}
+
+.slide__inner--interactive .slide__header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.interactive-editor-mount {
+  flex: 1;
+  min-height: 0;
+}
+
+.slide__inner--closing {
+  align-items: center;
+  text-align: center;
+  gap: var(--space-lg);
+}
+
+/* --------------------------------------------------------------------------
+   11. Títulos — con efecto de gradiente animado
+   -------------------------------------------------------------------------- */
+.slide__title {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  line-height: 1.2;
+}
+
+.slide__title--hero {
+  font-size: var(--font-size-3xl);
+  background: var(--gradient-accent);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientText 4s ease-in-out infinite;
+}
+
+@keyframes gradientText {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.slide__subtitle {
+  font-size: var(--font-size-xl);
+  color: var(--color-text-secondary);
+  font-weight: 400;
+}
+
+.slide__body {
+  font-size: var(--font-size-base);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-base);
+}
+
+/* Badge de sección — con brillo */
+.slide__section-badge {
+  display: inline-block;
+  padding: var(--space-xs) var(--space-md);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-accent);
+  background-color: var(--color-accent-subtle);
+  border: 1px solid rgba(110, 168, 254, 0.2);
+  border-radius: 999px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  position: relative;
+  overflow: hidden;
+}
+
+.slide__section-badge::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent 40%, rgba(110, 168, 254, 0.1) 50%, transparent 60%);
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%) rotate(45deg); }
+  100% { transform: translateX(100%) rotate(45deg); }
+}
+
+.slide__text-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.slide__diagram-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+/* --------------------------------------------------------------------------
+   12. Viñetas — con animación de entrada lateral
+   -------------------------------------------------------------------------- */
+.bullet-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding-left: 0;
+}
+
+.bullet-item {
+  position: relative;
+  padding-left: var(--space-lg);
+  font-size: var(--font-size-base);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-base);
+  transition: transform var(--transition-normal), color var(--transition-fast);
+}
+
+.bullet-item:hover {
+  color: var(--color-text-primary);
+  transform: translateX(4px);
+}
+
+.bullet-item::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--color-accent);
+  font-weight: 700;
+  transition: transform var(--transition-fast);
+}
+
+.bullet-item:hover::before {
+  transform: scale(1.3);
+}
+
+/* --------------------------------------------------------------------------
+   13. Panel de Código — con efecto glow
+   -------------------------------------------------------------------------- */
+.code-panel {
+  background-color: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.code-panel:hover {
+  border-color: rgba(110, 168, 254, 0.3);
+  box-shadow: 0 0 15px rgba(110, 168, 254, 0.08);
+}
+
+.code-panel__header {
+  padding: var(--space-sm) var(--space-md);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text-muted);
+  background-color: var(--color-bg-surface);
+  border-bottom: 1px solid var(--color-border);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.code-block {
+  margin: 0;
+  padding: var(--space-md);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  line-height: 1.7;
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-secondary);
+  overflow-x: auto;
+  white-space: pre;
+  tab-size: 2;
+}
+
+.code-block code {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+.syntax-keyword {
+  color: var(--color-accent);
+  font-weight: 700;
+}
+
+.syntax-structure {
+  color: var(--color-warning);
+  font-weight: 600;
+}
+
+.syntax-arrow {
+  color: var(--color-success);
+  font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
+   14. Editor Interactivo
+   -------------------------------------------------------------------------- */
+.interactive-editor {
+  display: flex;
+  gap: var(--space-md);
+  width: 100%;
+  height: 100%;
+  min-height: 280px;
+}
+
+.editor-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  background-color: var(--color-bg-secondary);
+  transition: border-color var(--transition-normal);
+}
+
+.editor-panel:focus-within {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(110, 168, 254, 0.1);
+}
+
+.editor-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--color-bg-surface);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.editor-panel__title {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.editor-restore-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-sm);
+  font-family: var(--font-sans);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-accent);
+  background-color: transparent;
+  border: 1px solid var(--color-accent);
+  border-radius: calc(var(--border-radius) / 2);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  min-height: 32px;
+}
+
+.editor-restore-btn:hover {
+  background-color: var(--color-accent);
+  color: var(--color-bg-primary);
+  transform: rotate(-360deg);
+  transition: all 500ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.editor-restore-btn:focus-visible {
+  outline: 3px solid var(--color-accent-hover);
+  outline-offset: 2px;
+}
+
+.editor-textarea {
+  flex: 1;
+  width: 100%;
+  padding: var(--space-md);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  line-height: 1.7;
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-secondary);
+  border: none;
+  outline: none;
+  resize: none;
+  tab-size: 2;
+}
+
+.editor-textarea::placeholder {
+  color: var(--color-text-muted);
+}
+
+.preview-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  background-color: var(--color-bg-secondary);
+}
+
+.preview-panel__header {
+  padding: var(--space-sm) var(--space-md);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text-muted);
+  background-color: var(--color-bg-surface);
+  border-bottom: 1px solid var(--color-border);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.preview-panel__content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-md);
+  overflow: auto;
+}
+
+.preview-panel__content svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.preview-panel__content--error {
+  border: 1px solid var(--color-error);
+  background-color: rgba(248, 113, 113, 0.05);
+}
+
+.editor-placeholder {
+  color: var(--color-text-muted);
+  font-style: italic;
+  font-size: var(--font-size-sm);
+}
+
+.mermaid-error {
+  color: var(--color-error);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  padding: var(--space-sm);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* --------------------------------------------------------------------------
+   15. Vista Previa de Diagramas — con glow animado
+   -------------------------------------------------------------------------- */
+.diagram-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 180px;
+  padding: var(--space-md);
+  background-color: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  overflow: auto;
+  position: relative;
+  transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.diagram-preview:hover {
+  border-color: rgba(110, 168, 254, 0.3);
+  box-shadow: var(--shadow-glow);
+}
+
+.diagram-preview svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  animation: diagramFadeIn 600ms ease-out;
+}
+
+@keyframes diagramFadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* --------------------------------------------------------------------------
+   16. Diapositiva de Índice — con hover interactivo
+   -------------------------------------------------------------------------- */
+.index-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: 0;
+  width: 100%;
+  max-width: 600px;
+  counter-reset: none;
+}
+
+.index-item {
+  width: 100%;
+}
+
+.index-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md) var(--space-lg);
+  text-decoration: none;
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+.index-link::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 3px;
+  height: 100%;
+  background: var(--gradient-accent);
+  transform: scaleY(0);
+  transition: transform var(--transition-normal);
+  transform-origin: bottom;
+}
+
+.index-link:hover {
+  background-color: var(--color-accent-subtle);
+  border-color: var(--color-accent);
+  transform: translateX(8px);
+  box-shadow: var(--shadow-glow);
+}
+
+.index-link:hover::before {
+  transform: scaleY(1);
+}
+
+.index-link:focus-visible {
+  outline: 3px solid var(--color-accent-hover);
+  outline-offset: 2px;
+}
+
+.index-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-bg-primary);
+  background: var(--gradient-accent);
+  border-radius: 50%;
+  flex-shrink: 0;
+  transition: transform var(--transition-spring);
+}
+
+.index-link:hover .index-number {
+  transform: scale(1.15) rotate(5deg);
+}
+
+.index-label {
+  font-size: var(--font-size-lg);
+  font-weight: 500;
+}
+
+/* --------------------------------------------------------------------------
+   17. Diapositiva de Cierre y Recursos
+   -------------------------------------------------------------------------- */
+.resources-section {
+  width: 100%;
+  max-width: 700px;
+  text-align: left;
+}
+
+.resources-title {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-md);
+}
+
+.resources-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: 0;
+}
+
+.resource-item {
+  font-size: var(--font-size-base);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-base);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--border-radius);
+  transition: background-color var(--transition-fast);
+}
+
+.resource-item:hover {
+  background-color: var(--color-bg-surface);
+}
+
+.resource-item a {
+  color: var(--color-accent);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+  position: relative;
+}
+
+.resource-item a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--gradient-accent);
+  transition: width var(--transition-normal);
+}
+
+.resource-item a:hover {
+  color: var(--color-accent-hover);
+}
+
+.resource-item a:hover::after {
+  width: 100%;
+}
+
+.resource-item a:focus-visible {
+  outline: 3px solid var(--color-accent-hover);
+  outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   18. Animaciones de Entrada — múltiples variantes
+   -------------------------------------------------------------------------- */
+.animate-in {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.animate-in--active {
+  animation: fadeSlideUp 400ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Variante para bullets — entrada desde la izquierda */
+.bullet-item.animate-in--active {
+  animation: fadeSlideRight 400ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes fadeSlideRight {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Variante para diagramas — zoom in */
+.slide__diagram-panel.animate-in--active,
+.slide__diagram-area.animate-in--active {
+  animation: fadeZoomIn 500ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes fadeZoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Variante para el título hero — con bounce */
+.slide__title--hero.animate-in--active {
+  animation: heroBounce 600ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes heroBounce {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.9);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-5px) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   19. Responsivo — Ajustes adicionales
+   -------------------------------------------------------------------------- */
+@media (max-width: 767px) {
+  .slide__inner--split {
+    flex-direction: column;
+  }
+
+  .slide__diagram-area {
+    flex-direction: column;
+  }
+
+  .interactive-editor {
+    flex-direction: column;
+  }
+
+  .index-list {
+    max-width: 100%;
+  }
+
+  .slide__title {
+    font-size: var(--font-size-xl);
+  }
+
+  .slide__title--hero {
+    font-size: var(--font-size-2xl);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   20. Efecto de pulso para el slide activo (sutil)
+   -------------------------------------------------------------------------- */
+.slide--title .slide__inner--title {
+  animation: subtlePulse 4s ease-in-out infinite;
+}
+
+@keyframes subtlePulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.005); }
+}
+
+/* Cursor personalizado para interactividad */
+.index-link,
+.navigation-bar button:not(:disabled) {
+  cursor: pointer;
+}
+
+/* Scroll suave en paneles de código (aplicado al existente .code-block via override) */
+
+/* Efecto de typing para subtítulos */
+.typing-effect {
+  overflow: hidden;
+  border-right: 2px solid var(--color-accent);
+  white-space: nowrap;
+  animation: typing 3s steps(40, end), blinkCaret 0.75s step-end infinite;
+  width: 0;
+}
+
+.typing-effect--done {
+  width: 100%;
+  border-right: none;
+  animation: none;
+}
+
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blinkCaret {
+  from, to { border-color: transparent; }
+  50% { border-color: var(--color-accent); }
+}
