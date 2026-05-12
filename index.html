@@ -110,7 +110,7 @@
     {
       id: 'intro', type: 'title',
       title: 'Mermaid: Diagramación Inteligente',
-      subtitle: 'Presentado por un Experto en Inteligencia Artificial',
+      subtitle: '',
       content: '<p>Descubre cómo transformar texto plano en diagramas profesionales con Mermaid, la herramienta que está revolucionando la documentación técnica.</p>',
     },
     {
@@ -138,6 +138,7 @@
         'Adoptado por GitHub, GitLab, Notion y más',
         'Más de 70 000 estrellas en GitHub',
       ],
+      footerHtml: '<div style="display:flex;gap:1.5rem;margin-top:1.5rem;justify-content:center;flex-wrap:wrap;align-items:center;"><img src="https://raw.githubusercontent.com/mermaid-js/mermaid/develop/docs/public/favicon.svg" alt="Logo de Mermaid" style="width:64px;height:64px;border-radius:8px;background:#232738;padding:8px;"><img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub logo" style="width:64px;height:64px;border-radius:8px;background:#232738;padding:8px;"><img src="https://upload.wikimedia.org/wikipedia/commons/4/45/Notion_app_logo.png" alt="Notion logo" style="width:64px;height:64px;border-radius:8px;background:#232738;padding:8px;"><img src="https://about.gitlab.com/images/press/logo/png/gitlab-icon-rgb.png" alt="GitLab logo" style="width:64px;height:64px;border-radius:8px;background:#232738;padding:8px;"></div>',
     },
     {
       id: 'basic-syntax', type: 'content', section: 'Fundamentos',
@@ -677,6 +678,7 @@
           '<h2 class="slide__title animate-in">' + escapeHtml(slide.title) + '</h2>' +
           (slide.content ? '<div class="slide__body animate-in">' + slide.content + '</div>' : '') +
           buildBullets(slide.bulletPoints) +
+          (slide.footerHtml ? '<div class="animate-in">' + slide.footerHtml + '</div>' : '') +
           '</div>';
         var right = '';
         if (hasDiagram) {
