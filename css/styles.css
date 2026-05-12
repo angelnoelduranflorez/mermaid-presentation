@@ -44,12 +44,12 @@
   /* Tipografía */
   --font-sans: 'Segoe UI', system-ui, -apple-system, sans-serif;
   --font-mono: 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
-  --font-size-base: 1rem;
-  --font-size-sm: 0.875rem;
-  --font-size-lg: 1.25rem;
-  --font-size-xl: 1.5rem;
-  --font-size-2xl: 2rem;
-  --font-size-3xl: 2.75rem;
+  --font-size-base: 1.5rem;
+  --font-size-sm: 1.25rem;
+  --font-size-lg: 1.85rem;
+  --font-size-xl: 2.25rem;
+  --font-size-2xl: 3rem;
+  --font-size-3xl: 4rem;
   --line-height-base: 1.6;
 
   /* Espaciado */
@@ -340,10 +340,11 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--space-xl);
+  padding: var(--space-lg);
   opacity: 0;
   will-change: transform, opacity;
   perspective: 1000px;
+  overflow-y: auto;
 }
 
 .slide-enter-forward {
@@ -428,17 +429,23 @@ body {
   display: flex;
   gap: var(--space-lg);
   width: 100%;
-  min-height: 200px;
+  min-height: 180px;
+  max-height: 55vh;
+  overflow: auto;
 }
 
 .slide__diagram-area .code-panel {
   flex: 1;
   min-width: 0;
+  max-height: 100%;
+  overflow: auto;
 }
 
 .slide__diagram-area .diagram-preview {
   flex: 1;
   min-width: 0;
+  max-height: 100%;
+  overflow: auto;
 }
 
 .slide__inner--interactive {
@@ -613,8 +620,8 @@ body {
   margin: 0;
   padding: var(--space-md);
   font-family: var(--font-mono);
-  font-size: var(--font-size-sm);
-  line-height: 1.7;
+  font-size: 0.85rem;
+  line-height: 1.6;
   color: var(--color-text-primary);
   background-color: var(--color-bg-secondary);
   overflow-x: auto;

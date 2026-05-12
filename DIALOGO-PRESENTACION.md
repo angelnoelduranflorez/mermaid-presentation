@@ -1,14 +1,14 @@
-# 🎤 Guión de Diálogo - Presentación Interactiva de Mermaid
+# 🎤 Guión de Diálogo — Presentación Interactiva de Mermaid
 
 ## 📋 Información General
 
 | Campo | Detalle |
 |-------|---------|
 | **Duración total** | 60 minutos |
-| **Número de slides** | 36 |
+| **Número de slides** | 34 |
 | **Formato** | Presentación interactiva con demos en vivo |
 | **Audiencia** | Desarrolladores, arquitectos, líderes técnicos |
-| **Materiales necesarios** | Laptop con editor, navegador con Mermaid Live Editor |
+| **Materiales necesarios** | Laptop con editor, navegador con Mermaid Live Editor abierto |
 
 ---
 
@@ -28,14 +28,15 @@
 
 | Sección | Slides | Tiempo | Minutos |
 |---------|--------|--------|---------|
-| Introducción | 1-5 | 0:00 - 8:00 | 8 min |
-| Arquitectura | 6 | 8:00 - 10:00 | 2 min |
-| Tipos de Diagramas | 7-17 | 10:00 - 32:00 | 22 min |
-| Personalización | 18-20 | 32:00 - 37:00 | 5 min |
-| Ejercicio Práctico | 21 | 37:00 - 42:00 | 5 min |
-| Ecosistema y Casos de Uso | 22-29 | 42:00 - 52:00 | 10 min |
-| Mejores Prácticas | 30-34 | 52:00 - 57:00 | 5 min |
-| Cierre | 35-36 | 57:00 - 60:00 | 3 min |
+| Introducción y Fundamentos | 1-6 | 0:00 - 10:00 | 10 min |
+| Tipos de Diagramas | 7-13 | 10:00 - 25:00 | 15 min |
+| Diagramas Avanzados | 14-17 | 25:00 - 32:00 | 7 min |
+| Configuración y Temas | 18-19 | 32:00 - 35:00 | 3 min |
+| Editor Interactivo (Ejercicio) | 20 | 35:00 - 40:00 | 5 min |
+| Comparativa | 21-22 | 40:00 - 43:00 | 3 min |
+| Casos de Uso | 23-28 | 43:00 - 52:00 | 9 min |
+| Mejores Prácticas | 29-33 | 52:00 - 58:00 | 6 min |
+| Cierre | 34 | 58:00 - 60:00 | 2 min |
 
 ---
 
@@ -43,8 +44,9 @@
 
 ---
 
-### 🎬 SLIDE 1 — Título
-**⏱️ Tiempo: 0:00 - 1:30 (1.5 min)**
+### 🎬 SLIDE 1 — intro (Título)
+**"Mermaid: Diagramación Inteligente"**
+**⏱️ Tiempo: 0:00 - 2:00 (2 min)**
 
 ---
 
@@ -52,7 +54,7 @@
 
 > Buenos días/tardes a todos. Bienvenidos a esta sesión sobre **Mermaid** — la herramienta que va a transformar la forma en que documentamos y comunicamos arquitectura en nuestros equipos.
 
-> Mi nombre es [NOMBRE] y hoy vamos a hacer algo diferente: no solo voy a mostrarles slides bonitos, sino que vamos a **escribir diagramas juntos, en vivo**, y van a salir de aquí creando sus propios diagramas como código.
+> Mi nombre es [NOMBRE] y hoy vamos a hacer algo diferente: no solo voy a mostrarles slides, sino que vamos a **escribir diagramas juntos, en vivo**, y van a salir de aquí creando sus propios diagramas como código.
 
 🙋 **[PREGUNTA AL PÚBLICO]**
 
@@ -66,20 +68,21 @@
 
 > Exacto. Ese es precisamente el problema que Mermaid resuelve. Vamos a ver cómo.
 
-**💡 Nota del presentador:** Establecer conexión emocional con el dolor compartido. El humor sobre diagramas desactualizados siempre funciona.
+**💡 Nota del presentador:** Establecer conexión emocional con el dolor compartido. El humor sobre diagramas desactualizados siempre funciona. Hacer contacto visual con la audiencia.
 
 ---
 
-### 📑 SLIDE 2 — Índice
-**⏱️ Tiempo: 1:30 - 2:30 (1 min)**
+### 📑 SLIDE 2 — table-of-contents (Índice)
+**"Índice de la Presentación"**
+**⏱️ Tiempo: 2:00 - 3:00 (1 min)**
 
 ---
 
 **DIÁLOGO:**
 
-> Este es nuestro mapa de ruta para la próxima hora. Vamos a cubrir bastante terreno, pero no se preocupen — la presentación está diseñada para ser práctica.
+> Este es nuestro mapa de ruta para la próxima hora. Vamos a cubrir bastante terreno, pero no se preocupen — la presentación está diseñada para ser práctica y dinámica.
 
-> Arrancaremos con los fundamentos, luego exploraremos los **11 tipos de diagramas** que Mermaid soporta, haremos un ejercicio práctico juntos, y cerraremos con casos de uso reales y mejores prácticas.
+> Arrancaremos con los **fundamentos**, luego exploraremos los tipos de diagramas — desde los básicos hasta los avanzados —, haremos un **ejercicio práctico** juntos, veremos casos de uso reales, y cerraremos con mejores prácticas.
 
 > Lo más importante: **esta es una sesión interactiva**. Si tienen preguntas, levanten la mano en cualquier momento. No esperen al final.
 
@@ -89,8 +92,9 @@
 
 ---
 
-### 🧩 SLIDE 3 — ¿Qué es Mermaid?
-**⏱️ Tiempo: 2:30 - 5:00 (2.5 min)**
+### 🧩 SLIDE 3 — what-is-mermaid (Fundamentos)
+**"¿Qué es Mermaid?"**
+**⏱️ Tiempo: 3:00 - 5:30 (2.5 min)**
 
 ---
 
@@ -102,9 +106,9 @@
 
 💻 **[DEMO EN VIVO]**
 
-> Déjenme mostrarles algo rápido. Voy a abrir el editor y escribir esto:
+> Déjenme mostrarles algo rápido. Voy a escribir esto:
 
-```
+```mermaid
 graph TD
     A[Usuario] --> B[API Gateway]
     B --> C[Servicio]
@@ -123,12 +127,13 @@ graph TD
 
 > ¡Exacto! Pueden vivir en Git, se pueden revisar en Pull Requests, y se actualizan junto con el código.
 
-**💡 Nota del presentador:** La demo en vivo es crucial aquí. El "wow moment" de ver texto convertirse en diagrama instantáneamente es lo que engancha a la audiencia.
+**💡 Nota del presentador:** La demo en vivo es crucial aquí. El "wow moment" de ver texto convertirse en diagrama instantáneamente es lo que engancha a la audiencia. Tener el editor listo antes de empezar.
 
 ---
 
-### ⌨️ SLIDE 4 — Sintaxis Básica
-**⏱️ Tiempo: 5:00 - 7:00 (2 min)**
+### ⌨️ SLIDE 4 — basic-syntax (Fundamentos)
+**"Sintaxis Básica de Mermaid"**
+**⏱️ Tiempo: 5:30 - 7:30 (2 min)**
 
 ---
 
@@ -138,13 +143,13 @@ graph TD
 
 > **Primero**, siempre declaramos el tipo de diagrama: `graph`, `sequenceDiagram`, `classDiagram`, etc.
 
-> **Segundo**, definimos nodos con identificadores y etiquetas entre corchetes, paréntesis o llaves — cada forma tiene un significado visual diferente:
+> **Segundo**, definimos nodos con identificadores y etiquetas — cada forma tiene un significado visual diferente:
 
 ```
-A[Rectángulo]    - para procesos
-B(Redondeado)    - para inicio/fin
-C{Diamante}      - para decisiones
-D[(Cilindro)]    - para bases de datos
+A[Rectángulo]    → procesos
+B(Redondeado)    → inicio/fin
+C{Diamante}      → decisiones
+D[(Cilindro)]    → bases de datos
 ```
 
 > **Tercero**, conectamos nodos con flechas:
@@ -160,14 +165,15 @@ D[(Cilindro)]    - para bases de datos
 
 ⏸️ **[PAUSA INTERACTIVA]**
 
-> Tómense 10 segundos para pensar: **¿qué diagrama de su proyecto actual les gustaría poder generar con texto?** Guarden esa idea, la vamos a usar más adelante.
+> Tómense 10 segundos para pensar: **¿qué diagrama de su proyecto actual les gustaría poder generar con texto?** Guarden esa idea, la vamos a usar más adelante en el ejercicio.
 
-**💡 Nota del presentador:** Plantar la semilla del ejercicio práctico desde temprano mantiene la atención.
+**💡 Nota del presentador:** Plantar la semilla del ejercicio práctico desde temprano mantiene la atención y genera expectativa.
 
 ---
 
-### ✅ SLIDE 5 — Ventajas
-**⏱️ Tiempo: 7:00 - 8:00 (1 min)**
+### ✅ SLIDE 5 — advantages (Fundamentos)
+**"Ventajas de Mermaid"**
+**⏱️ Tiempo: 7:30 - 8:30 (1 min)**
 
 ---
 
@@ -190,8 +196,9 @@ D[(Cilindro)]    - para bases de datos
 
 ---
 
-### ⚙️ SLIDE 6 — Arquitectura de Renderizado
-**⏱️ Tiempo: 8:00 - 10:00 (2 min)**
+### ⚙️ SLIDE 6 — rendering-architecture (Fundamentos)
+**"Arquitectura de Renderizado"**
+**⏱️ Tiempo: 8:30 - 10:00 (1.5 min)**
 
 ---
 
@@ -212,11 +219,14 @@ D[(Cilindro)]    - para bases de datos
 
 🔄 **[TRANSICIÓN]**
 
-> Ahora viene la parte divertida. Vamos a explorar los **11 tipos de diagramas** que Mermaid soporta. Prepárense porque vamos a ir rápido pero con demos en vivo.
+> Ahora viene la parte divertida. Vamos a explorar los **tipos de diagramas** que Mermaid soporta. Prepárense porque vamos a ir rápido pero con demos en vivo.
+
+**💡 Nota del presentador:** No profundizar demasiado en detalles técnicos. El objetivo es dar contexto, no una clase de compiladores.
 
 ---
 
-### 🔀 SLIDE 7 — Diagramas de Flujo
+### 🔀 SLIDE 7 — flowchart (Tipos de Diagramas)
+**"Diagramas de Flujo (Flowchart)"**
 **⏱️ Tiempo: 10:00 - 13:00 (3 min)**
 
 ---
@@ -254,14 +264,15 @@ graph TD
 
 > *(Tomar 2-3 respuestas rápidas)*
 
-> Todos esos son candidatos perfectos. Guarden esas ideas.
+> Todos esos son candidatos perfectos. Guarden esas ideas para el ejercicio.
 
-**💡 Nota del presentador:** Ir escribiendo el código línea por línea genera más impacto que mostrarlo completo de golpe.
+**💡 Nota del presentador:** Ir escribiendo el código línea por línea genera más impacto que mostrarlo completo de golpe. Dejar que la audiencia vea el diagrama construirse.
 
 ---
 
-### 🔄 SLIDE 8 — Diagramas de Secuencia
-**⏱️ Tiempo: 13:00 - 16:00 (3 min)**
+### 🔄 SLIDE 8 — sequence-diagram (Tipos de Diagramas)
+**"Diagramas de Secuencia"**
+**⏱️ Tiempo: 13:00 - 15:30 (2.5 min)**
 
 ---
 
@@ -294,23 +305,11 @@ sequenceDiagram
 > - `-->>` es un mensaje punteado (response)
 > - `participant` define los actores con alias
 
-> Lo poderoso aquí es que pueden agregar **bloques condicionales**:
-
-```mermaid
-    alt Credenciales válidas
-        Auth-->>API: Token JWT
-    else Credenciales inválidas
-        Auth-->>API: 401 Unauthorized
-    end
-```
-
-> Esto documenta tanto el happy path como los casos de error en un solo diagrama.
+> Lo poderoso es que pueden agregar **bloques condicionales** con `alt`/`else`/`end` para documentar happy path y errores en un solo diagrama.
 
 🙋 **[PREGUNTA AL PÚBLICO]**
 
-> **¿Cuántos de ustedes documentan las interacciones entre sus microservicios actualmente?** Y los que sí lo hacen: **¿con qué herramienta?**
-
-> *(Esperar respuestas)*
+> **¿Cuántos de ustedes documentan las interacciones entre sus microservicios actualmente?** Y los que sí: **¿con qué herramienta?**
 
 > Con Mermaid, esa documentación puede vivir directamente en el README del repositorio del servicio.
 
@@ -318,8 +317,9 @@ sequenceDiagram
 
 ---
 
-### 🏗️ SLIDE 9 — Diagramas de Clases
-**⏱️ Tiempo: 16:00 - 18:30 (2.5 min)**
+### 🏗️ SLIDE 9 — class-diagram (Tipos de Diagramas)
+**"Diagramas de Clases"**
+**⏱️ Tiempo: 15:30 - 17:30 (2 min)**
 
 ---
 
@@ -344,7 +344,6 @@ classDiagram
         +Date fecha
         +float total
         +calcularTotal() float
-        +cancelar() void
     }
     
     class Producto {
@@ -370,8 +369,9 @@ classDiagram
 
 ---
 
-### 🚦 SLIDE 10 — Diagramas de Estado
-**⏱️ Tiempo: 18:30 - 20:30 (2 min)**
+### 🚦 SLIDE 10 — state-diagram (Tipos de Diagramas)
+**"Diagramas de Estado"**
+**⏱️ Tiempo: 17:30 - 19:30 (2 min)**
 
 ---
 
@@ -391,12 +391,6 @@ stateDiagram-v2
     Aprobado --> Publicado : Publicar
     Publicado --> Archivado : Archivar
     Archivado --> [*]
-    
-    state EnRevision {
-        [*] --> RevisionTecnica
-        RevisionTecnica --> RevisionNegocio
-        RevisionNegocio --> [*]
-    }
 ```
 
 > Puntos clave:
@@ -416,14 +410,15 @@ stateDiagram-v2
 
 ---
 
-### 📊 SLIDE 11 — Diagramas de Gantt
-**⏱️ Tiempo: 20:30 - 22:30 (2 min)**
+### 📊 SLIDE 11 — gantt-diagram (Tipos de Diagramas)
+**"Diagramas de Gantt"**
+**⏱️ Tiempo: 19:30 - 21:00 (1.5 min)**
 
 ---
 
 **DIÁLOGO:**
 
-> Sí, Mermaid también hace Gantt. No va a reemplazar MS Project o Jira, pero para planificaciones rápidas en documentación es muy útil.
+> Sí, Mermaid también hace Gantt. No va a reemplazar Jira, pero para planificaciones rápidas en documentación es muy útil.
 
 💻 **[DEMO EN VIVO]**
 
@@ -438,13 +433,11 @@ gantt
     
     section Fase 2 - Desarrollo
     Servicio de Auth         :b1, after a2, 15d
-    Servicio de Usuarios     :b2, after a2, 12d
-    API Gateway              :b3, after b1, 8d
+    API Gateway              :b2, after b1, 8d
     
     section Fase 3 - Deploy
-    Configurar K8s           :c1, after b3, 5d
-    Migración gradual        :c2, after c1, 10d
-    Decomisionar monolito    :crit, c3, after c2, 3d
+    Configurar K8s           :c1, after b2, 5d
+    Migración gradual        :crit, c2, after c1, 10d
 ```
 
 > Lo interesante:
@@ -458,8 +451,9 @@ gantt
 
 ---
 
-### 🗄️ SLIDE 12 — Diagramas ER (Entidad-Relación)
-**⏱️ Tiempo: 22:30 - 24:30 (2 min)**
+### 🗄️ SLIDE 12 — er-diagram (Tipos de Diagramas)
+**"Diagramas Entidad-Relación"**
+**⏱️ Tiempo: 21:00 - 23:00 (2 min)**
 
 ---
 
@@ -485,13 +479,6 @@ erDiagram
         int usuario_id FK
         date fecha
         float total
-        string estado
-    }
-    PRODUCTO {
-        int id PK
-        string nombre
-        float precio
-        int stock
     }
 ```
 
@@ -499,7 +486,6 @@ erDiagram
 > - `||` = exactamente uno
 > - `o{` = cero o muchos
 > - `|{` = uno o muchos
-> - `o|` = cero o uno
 
 > Esto es **fantástico** para documentar el esquema de base de datos directamente en el repositorio. Cada vez que hacen una migración, actualizan el diagrama.
 
@@ -513,8 +499,9 @@ erDiagram
 
 ---
 
-### 🥧 SLIDE 13 — Diagramas de Pastel (Pie)
-**⏱️ Tiempo: 24:30 - 25:30 (1 min)**
+### 🥧 SLIDE 13 — pie-chart (Tipos de Diagramas)
+**"Diagramas de Pastel"**
+**⏱️ Tiempo: 23:00 - 25:00 (2 min)**
 
 ---
 
@@ -534,10 +521,17 @@ pie title Distribución de Bugs por Severidad
 
 > No es Chart.js, pero para visualizaciones rápidas en documentación cumple perfectamente.
 
+🔄 **[TRANSICIÓN]**
+
+> Esos son los diagramas fundamentales. Ahora vamos con los tipos más avanzados y especializados que Mermaid ha incorporado recientemente.
+
+**💡 Nota del presentador:** Hacer una pausa natural aquí. Preguntar si hay dudas sobre los diagramas básicos antes de avanzar.
+
 ---
 
-### 🧠 SLIDE 14 — Mapas Mentales
-**⏱️ Tiempo: 25:30 - 27:00 (1.5 min)**
+### 🧠 SLIDE 14 — mindmap-diagram (Diagramas Avanzados)
+**"Mapas Mentales (Mindmap)"**
+**⏱️ Tiempo: 25:00 - 26:30 (1.5 min)**
 
 ---
 
@@ -566,20 +560,21 @@ mindmap
       Monitoring
         Datadog
         PagerDuty
-    Datos
-      PostgreSQL
-      Redis
-      Elasticsearch
 ```
 
 > La indentación define la jerarquía. Es tan simple como escribir un outline.
 
 > Uso ideal: documentar la arquitectura de alto nivel de un sistema, o el alcance de un proyecto en una propuesta.
 
+⏸️ **[PAUSA INTERACTIVA]**
+
+> **¿Pueden pensar en un mapa mental que les sería útil en su proyecto actual?** Tal vez la estructura de sus microservicios, o las dependencias de su equipo.
+
 ---
 
-### 📅 SLIDE 15 — Líneas de Tiempo (Timeline)
-**⏱️ Tiempo: 27:00 - 28:30 (1.5 min)**
+### 📅 SLIDE 15 — timeline-diagram (Diagramas Avanzados)
+**"Líneas de Tiempo (Timeline)"**
+**⏱️ Tiempo: 26:30 - 28:00 (1.5 min)**
 
 ---
 
@@ -597,7 +592,6 @@ timeline
          : Equipo crece a 15
     2024 : Event-driven architecture
          : Multi-región
-         : Equipo de 25
     2025 : AI/ML integrado
          : Edge computing
 ```
@@ -607,14 +601,13 @@ timeline
 > - Presentaciones a stakeholders
 > - Onboarding de nuevos miembros del equipo
 
-🔄 **[TRANSICIÓN]**
-
-> Seguimos con más tipos de diagramas especializados...
+> La sintaxis es mínima: año, dos puntos, y los eventos. Así de simple.
 
 ---
 
-### 🌿 SLIDE 16 — GitGraph
-**⏱️ Tiempo: 28:30 - 30:00 (1.5 min)**
+### 🌿 SLIDE 16 — gitgraph-diagram (Diagramas Avanzados)
+**"Diagramas Git (GitGraph)"**
+**⏱️ Tiempo: 28:00 - 30:00 (2 min)**
 
 ---
 
@@ -645,17 +638,18 @@ gitGraph
 > Esto es **oro** para:
 > - Documentar la estrategia de branching del equipo
 > - Explicar Git Flow o Trunk-Based Development a nuevos miembros
-> - Incluir en guías de contribución
+> - Incluir en guías de contribución (`CONTRIBUTING.md`)
 
 🙋 **[PREGUNTA AL PÚBLICO]**
 
 > **¿Tienen documentada su estrategia de branching?** ¿Dónde vive esa documentación?
 
-> Con Mermaid, puede vivir directamente en el `CONTRIBUTING.md` del repo.
+> Con Mermaid, puede vivir directamente en el repo, renderizada y siempre actualizada.
 
 ---
 
-### 📐 SLIDE 17 — Diagramas de Cuadrante
+### 📐 SLIDE 17 — quadrant-diagram (Diagramas Avanzados)
+**"Diagramas de Cuadrante"**
 **⏱️ Tiempo: 30:00 - 32:00 (2 min)**
 
 ---
@@ -679,7 +673,7 @@ quadrantChart
     Refactorizar auth: [0.7, 0.9]
     Migrar a TypeScript: [0.9, 0.7]
     Limpiar logs: [0.2, 0.2]
-    Añadir tests unitarios: [0.5, 0.6]
+    Añadir tests: [0.5, 0.6]
 ```
 
 > Casos de uso:
@@ -691,12 +685,15 @@ quadrantChart
 
 🔄 **[TRANSICIÓN]**
 
-> Ya conocemos los tipos de diagramas. Ahora veamos cómo personalizarlos y hacerlos nuestros.
+> Ya conocemos todos los tipos de diagramas. Ahora veamos cómo personalizarlos y hacerlos nuestros.
+
+**💡 Nota del presentador:** Si la audiencia se ve cansada, este es buen momento para una micro-pausa de 30 segundos. "Estiren las piernas, tomen agua."
 
 ---
 
-### 🎨 SLIDE 18 — Temas y Personalización
-**⏱️ Tiempo: 32:00 - 34:00 (2 min)**
+### 🎨 SLIDE 18 — themes-config (Configuración y Temas)
+**"Temas y Personalización"**
+**⏱️ Tiempo: 32:00 - 33:30 (1.5 min)**
 
 ---
 
@@ -704,19 +701,9 @@ quadrantChart
 
 > Mermaid viene con temas predefinidos y permite personalización profunda. No tienen que quedarse con los colores por defecto.
 
+> Los temas disponibles son: `default`, `dark`, `forest`, `neutral`, `base`
+
 💻 **[DEMO EN VIVO]**
-
-> Los temas disponibles son:
-
-```mermaid
-%%{init: {'theme': 'dark'}}%%
-graph TD
-    A[Con tema dark] --> B[Se ve así]
-```
-
-> Temas disponibles: `default`, `dark`, `forest`, `neutral`, `base`
-
-> Pero lo poderoso es la personalización con variables:
 
 ```mermaid
 %%{init: {
@@ -726,8 +713,7 @@ graph TD
     'primaryTextColor': '#fff',
     'primaryBorderColor': '#2E6BA6',
     'lineColor': '#F5A623',
-    'secondaryColor': '#7ED321',
-    'tertiaryColor': '#F8E71C'
+    'secondaryColor': '#7ED321'
   }
 }}%%
 graph TD
@@ -739,12 +725,13 @@ graph TD
 
 🙋 **[PREGUNTA AL PÚBLICO]**
 
-> **¿Su empresa tiene una guía de estilo para documentación técnica?** Si la tienen, Mermaid se puede adaptar a ella.
+> **¿Su empresa tiene una guía de estilo para documentación técnica?** Si la tienen, Mermaid se puede adaptar a ella perfectamente.
 
 ---
 
-### ⚙️ SLIDE 19 — Directivas y Configuración Avanzada
-**⏱️ Tiempo: 34:00 - 35:30 (1.5 min)**
+### ⚙️ SLIDE 19 — directives-config (Configuración y Temas)
+**"Directivas y Configuración Avanzada"**
+**⏱️ Tiempo: 33:30 - 35:00 (1.5 min)**
 
 ---
 
@@ -758,12 +745,10 @@ graph TD
     'curve': 'basis',
     'padding': 20,
     'nodeSpacing': 50,
-    'rankSpacing': 70,
-    'htmlLabels': true
+    'rankSpacing': 70
   },
   'sequence': {
     'mirrorActors': false,
-    'messageAlign': 'center',
     'actorMargin': 80
   }
 }}%%
@@ -777,69 +762,41 @@ graph TD
 
 > Para equipos, recomiendo crear un archivo de configuración compartido que estandarice el look & feel de todos los diagramas del proyecto.
 
-**💡 Nota del presentador:** No profundizar demasiado aquí. Mencionar que la documentación oficial tiene todas las opciones disponibles.
+🔄 **[TRANSICIÓN]**
+
+> Ahora sí, manos a la obra. Es hora de que ustedes escriban su primer diagrama.
+
+**💡 Nota del presentador:** No profundizar demasiado en directivas. Mencionar que la documentación oficial tiene todas las opciones. El objetivo es que sepan que existe.
 
 ---
 
-### 🖥️ SLIDE 20 — Editor Interactivo (Mermaid Live Editor)
-**⏱️ Tiempo: 35:30 - 37:00 (1.5 min)**
+### 🖥️ SLIDE 20 — editor-playground (Editor Interactivo)
+**"Experimenta con Mermaid"**
+**⏱️ Tiempo: 35:00 - 40:00 (5 min)**
 
 ---
 
 **DIÁLOGO:**
 
-> Antes de pasar al ejercicio, déjenme mostrarles su nueva herramienta favorita: el **Mermaid Live Editor**.
+> ¡Llegó el momento! Vamos a hacer un ejercicio práctico juntos.
 
-💻 **[DEMO EN VIVO]**
-
-> *(Abrir mermaid.live en el navegador)*
+> Primero, déjenme presentarles el **Mermaid Live Editor**: **mermaid.live**
 
 > Este editor online les permite:
 > - ✅ Escribir y previsualizar diagramas en tiempo real
 > - ✅ Cambiar temas al vuelo
 > - ✅ Exportar como SVG o PNG
-> - ✅ Compartir mediante URL (el código va en la URL)
+> - ✅ Compartir mediante URL
 > - ✅ Ver errores de sintaxis en tiempo real
-
-> La URL es: **mermaid.live** — Guárdenla, la van a usar mucho.
-
-> También tienen opciones locales:
-> - **VS Code**: extensión "Mermaid Preview"
-> - **IntelliJ**: plugin de Mermaid
-> - **CLI**: `mmdc` (mermaid-cli) para generar imágenes desde terminal
-
-🔄 **[TRANSICIÓN]**
-
-> Ahora sí, manos a la obra. Es hora de que ustedes escriban su primer diagrama.
-
----
-
-### ✏️ SLIDE 21 — Ejercicio Práctico
-**⏱️ Tiempo: 37:00 - 42:00 (5 min)**
-
----
-
-**DIÁLOGO:**
-
-> ¡Llegó el momento! Vamos a hacer un ejercicio juntos.
 
 ✏️ **[EJERCICIO]**
 
 > **Instrucciones:**
-> 1. Abran **mermaid.live** en su navegador
+> 1. Abran **mermaid.live** en su navegador (o usen el editor integrado en esta presentación)
 > 2. Elijan UNO de estos retos (tienen 4 minutos):
 
 > **Reto Nivel 1** (Principiante):
-> Crear un diagrama de flujo de su proceso de morning standup:
-> ```
-> graph TD
->     A[Inicio Standup] --> B[¿Qué hice ayer?]
->     B --> C[¿Qué haré hoy?]
->     C --> D{¿Tengo bloqueos?}
->     D -->|Sí| E[Describir bloqueo]
->     D -->|No| F[Fin]
->     E --> F
-> ```
+> Crear un diagrama de flujo de su proceso de morning standup
 
 > **Reto Nivel 2** (Intermedio):
 > Crear un diagrama de secuencia de una llamada API de su proyecto
@@ -847,7 +804,7 @@ graph TD
 > **Reto Nivel 3** (Avanzado):
 > Crear un diagrama ER de 3-4 tablas de su base de datos
 
-⏸️ **[PAUSA INTERACTIVA]**
+⏸️ **[PAUSA INTERACTIVA — 4 minutos]**
 
 > *(Dar 4 minutos para el ejercicio. Caminar entre la audiencia ayudando.)*
 
@@ -857,12 +814,13 @@ graph TD
 
 > ¡Excelente! Miren cómo en 4 minutos ya tienen un diagrama funcional. Imaginen lo que pueden hacer con 15 minutos dedicados.
 
-**💡 Nota del presentador:** Este es el momento más importante de la presentación. Asegurarse de que TODOS abran el editor. Caminar y ayudar activamente. Si alguien se atora, ayudarle inmediatamente.
+**💡 Nota del presentador:** Este es el momento más importante de la presentación. Asegurarse de que TODOS abran el editor. Caminar y ayudar activamente. Si alguien se atora, ayudarle inmediatamente. Tener snippets de ejemplo listos para copiar/pegar si alguien se bloquea.
 
 ---
 
-### ⚖️ SLIDE 22 — Comparativa con Otras Herramientas
-**⏱️ Tiempo: 42:00 - 44:00 (2 min)**
+### ⚖️ SLIDE 21 — comparison (Comparativa)
+**"Mermaid vs Otras Herramientas"**
+**⏱️ Tiempo: 40:00 - 41:30 (1.5 min)**
 
 ---
 
@@ -872,27 +830,21 @@ graph TD
 
 > **Draw.io / Diagrams.net:**
 > - ✅ Más flexible visualmente
-> - ❌ Archivos XML difíciles de versionar
-> - ❌ Diffs ilegibles en PRs
+> - ❌ Archivos XML difíciles de versionar, diffs ilegibles
 
 > **Lucidchart / Miro:**
 > - ✅ Colaboración en tiempo real
-> - ❌ De pago
-> - ❌ Vendor lock-in
-> - ❌ No vive en el repo
+> - ❌ De pago, vendor lock-in, no vive en el repo
 
 > **PlantUML:**
 > - ✅ Más tipos de diagramas UML
-> - ❌ Necesita servidor Java para renderizar
-> - ❌ Sintaxis más verbosa
-> - ❌ Menos integraciones nativas
+> - ❌ Necesita servidor Java, sintaxis más verbosa
 
 > **Mermaid:**
-> - ✅ Nativo en GitHub, GitLab, Notion
-> - ✅ Zero dependencies (JavaScript puro)
-> - ✅ Sintaxis minimalista
-> - ❌ Menos control visual fino
-> - ❌ Limitado en diagramas muy complejos
+> - ✅ Nativo en GitHub/GitLab, zero dependencies, sintaxis minimalista
+> - ❌ Menos control visual fino, limitado en diagramas muy complejos
+
+> La conclusión: **no hay herramienta perfecta**. Mermaid brilla cuando necesitan diagramas versionables, integrados con código, y mantenibles por el equipo de desarrollo.
 
 🙋 **[PREGUNTA AL PÚBLICO]**
 
@@ -902,8 +854,9 @@ graph TD
 
 ---
 
-### 📊 SLIDE 23 — Tabla Comparativa
-**⏱️ Tiempo: 44:00 - 45:00 (1 min)**
+### 📊 SLIDE 22 — comparison-table (Comparativa)
+**"Tabla Comparativa Detallada"**
+**⏱️ Tiempo: 41:30 - 43:00 (1.5 min)**
 
 ---
 
@@ -920,16 +873,17 @@ graph TD
 | Renderizado | Client-side | Server-side | Client-side | Cloud |
 | Colaboración | Via Git | Via Git | Limitada | ⭐⭐⭐ |
 
-> La conclusión: **no hay herramienta perfecta**. Mermaid brilla cuando necesitan diagramas versionables, integrados con código, y mantenibles por el equipo de desarrollo.
+> Mi recomendación: usen Mermaid como **herramienta principal** para documentación en repositorios, y complementen con Draw.io o Lucidchart solo cuando necesiten diagramas muy complejos o colaboración visual en tiempo real.
 
 🔄 **[TRANSICIÓN]**
 
-> Ahora veamos los casos de uso reales donde Mermaid genera más valor.
+> Ahora veamos los casos de uso reales donde Mermaid genera más valor en el día a día.
 
 ---
 
-### 📖 SLIDE 24 — Documentación Técnica
-**⏱️ Tiempo: 45:00 - 46:30 (1.5 min)**
+### 📖 SLIDE 23 — use-case-docs (Casos de Uso)
+**"Documentación Técnica y README"**
+**⏱️ Tiempo: 43:00 - 44:30 (1.5 min)**
 
 ---
 
@@ -949,12 +903,13 @@ graph TD
 
 > Esto significa que la documentación se **revisa en el mismo PR que el código**. Si cambias la arquitectura, actualizas el diagrama en el mismo commit.
 
-**💡 Nota del presentador:** Mostrar un ejemplo real de un README con diagrama Mermaid renderizado en GitHub si es posible.
+**💡 Nota del presentador:** Si es posible, mostrar un ejemplo real de un README con diagrama Mermaid renderizado en GitHub.
 
 ---
 
-### 🤖 SLIDE 25 — Generación con IA
-**⏱️ Tiempo: 46:30 - 48:00 (1.5 min)**
+### 🤖 SLIDE 24 — use-case-ai (Casos de Uso)
+**"Generación con Inteligencia Artificial"**
+**⏱️ Tiempo: 44:30 - 46:00 (1.5 min)**
 
 ---
 
@@ -973,20 +928,19 @@ graph TD
 > - Pueden crear **prompts estándar** para que la IA genere diagramas consistentes
 > - Pueden alimentar la IA con su código y pedirle que genere el diagrama de arquitectura
 
-💻 **[DEMO EN VIVO]**
-
-> *(Si hay tiempo, hacer una demo rápida pidiendo a un LLM que genere un diagrama)*
-
 > El flujo ideal: **código → IA → diagrama Mermaid → documentación**. Semi-automatizado.
 
 🙋 **[PREGUNTA AL PÚBLICO]**
 
 > **¿Alguien ya ha usado IA para generar documentación técnica?** ¿Qué resultados han tenido?
 
+> *(Tomar 1-2 respuestas)*
+
 ---
 
-### 🤝 SLIDE 26 — Plataformas Colaborativas
-**⏱️ Tiempo: 48:00 - 49:00 (1 min)**
+### 🤝 SLIDE 25 — use-case-platforms (Casos de Uso)
+**"Plataformas Colaborativas"**
+**⏱️ Tiempo: 46:00 - 47:30 (1.5 min)**
 
 ---
 
@@ -995,30 +949,26 @@ graph TD
 > Mermaid no vive solo en GitHub. Está integrado en un ecosistema enorme:
 
 > **Renderizado nativo:**
-> - GitHub (Markdown)
-> - GitLab (Markdown)
-> - Notion
-> - Obsidian
-> - Docusaurus
-> - MkDocs (con plugin)
+> - GitHub, GitLab (Markdown)
+> - Notion, Obsidian
+> - Docusaurus, MkDocs
 
 > **Con plugins:**
-> - Confluence
-> - Jira
-> - Slack (bots)
-> - Teams
+> - Confluence, Jira
+> - Slack (bots), Teams
 
 > **Editores:**
-> - VS Code (extensión)
+> - VS Code (extensión "Mermaid Preview")
 > - IntelliJ (plugin)
-> - Vim/Neovim (plugin)
+> - Vim/Neovim
 
-> Esto significa que no importa qué stack de herramientas use su equipo — Mermaid probablemente ya tiene integración.
+> Esto significa que no importa qué stack de herramientas use su equipo — Mermaid probablemente ya tiene integración. La barrera de adopción es prácticamente cero.
 
 ---
 
-### 🚀 SLIDE 27 — CI/CD
-**⏱️ Tiempo: 49:00 - 50:30 (1.5 min)**
+### 🚀 SLIDE 26 — use-case-cicd (Casos de Uso)
+**"CI/CD y Arquitectura de Despliegue"**
+**⏱️ Tiempo: 47:30 - 49:00 (1.5 min)**
 
 ---
 
@@ -1028,8 +978,8 @@ graph TD
 
 > ¿Qué pueden automatizar?
 
-> 1. **Validación**: Verificar que los diagramas Mermaid en la documentación son sintácticamente correctos
-> 2. **Generación**: Auto-generar diagramas a partir del código (con herramientas de análisis estático)
+> 1. **Validación**: Verificar que los diagramas en la documentación son sintácticamente correctos
+> 2. **Generación**: Auto-generar diagramas a partir del código
 > 3. **Exportación**: Convertir diagramas a PNG/SVG para documentación estática
 > 4. **Detección de drift**: Alertar cuando el código cambia pero el diagrama no
 
@@ -1045,12 +995,13 @@ graph TD
 
 > Imaginen: cada PR que modifica la arquitectura **debe** actualizar el diagrama correspondiente. El CI lo valida automáticamente.
 
-**💡 Nota del presentador:** Este punto es especialmente relevante para líderes técnicos y DevOps. Enfatizar la gobernanza automatizada.
+**💡 Nota del presentador:** Este punto es especialmente relevante para líderes técnicos y DevOps. Enfatizar la gobernanza automatizada de documentación.
 
 ---
 
-### 👋 SLIDE 28 — Onboarding
-**⏱️ Tiempo: 50:30 - 51:30 (1 min)**
+### 👋 SLIDE 27 — use-case-onboarding (Casos de Uso)
+**"Onboarding de Desarrolladores"**
+**⏱️ Tiempo: 49:00 - 50:30 (1.5 min)**
 
 ---
 
@@ -1066,181 +1017,196 @@ graph TD
 > - **Día 3**: Revisa el diagrama ER para entender el modelo de datos
 > - **Semana 1**: Ya puede contribuir con contexto
 
-> El costo de crear estos diagramas se paga con creces la primera vez que un nuevo miembro se incorpora al equipo.
+> El ROI es claro: **reducen semanas de onboarding a días**. Y lo mejor: la documentación se mantiene actualizada porque vive junto al código.
 
 🙋 **[PREGUNTA AL PÚBLICO]**
 
-> **¿Cuántas personas se han unido a su equipo en el último año?** Multipliquen eso por los días que tardaron en ser productivos. Ese es el costo de no tener documentación visual.
+> **¿Cuánto tarda actualmente el onboarding técnico en su equipo?** ¿Tienen documentación de arquitectura actualizada?
 
 ---
 
-### 🏛️ SLIDE 29 — Arquitectura de Microservicios
-**⏱️ Tiempo: 51:30 - 52:30 (1 min)**
+### 🏛️ SLIDE 28 — use-case-architecture (Casos de Uso)
+**"Documentación de Arquitectura"**
+**⏱️ Tiempo: 50:30 - 52:00 (1.5 min)**
 
 ---
 
 **DIÁLOGO:**
 
-> En arquitecturas de microservicios, Mermaid es especialmente valioso porque:
+> Cerremos los casos de uso con uno integral: **documentación de arquitectura completa**.
 
-> 1. **Cada servicio puede tener su propio diagrama** en su repo
-> 2. **Los diagramas de secuencia** documentan la comunicación entre servicios
-> 3. **Los diagramas de flujo** muestran los event flows
-> 4. **Los diagramas ER** documentan la base de datos de cada servicio
+💻 **[DEMO EN VIVO]**
 
-> Patrón recomendado:
+> Imaginen un sistema documentado así:
+
+```mermaid
+graph TB
+    subgraph Frontend
+        WEB[Web App - React]
+        MOB[Mobile - React Native]
+    end
+    
+    subgraph API Layer
+        GW[API Gateway]
+        AUTH[Auth Service]
+    end
+    
+    subgraph Backend Services
+        USR[User Service]
+        PAY[Payment Service]
+        NOT[Notification Service]
+    end
+    
+    subgraph Data
+        PG[(PostgreSQL)]
+        RD[(Redis)]
+        MQ[RabbitMQ]
+    end
+    
+    WEB --> GW
+    MOB --> GW
+    GW --> AUTH
+    GW --> USR
+    GW --> PAY
+    PAY --> MQ
+    MQ --> NOT
+    USR --> PG
+    AUTH --> RD
 ```
-/mi-servicio
-  /docs
-    architecture.md      ← diagrama de componentes
-    api-flows.md         ← diagramas de secuencia
-    data-model.md        ← diagrama ER
-    state-machines.md    ← diagramas de estado
-  /src
-    ...
-```
 
-> Cada servicio es auto-documentado. No necesitan un wiki centralizado que nadie mantiene.
+> Con subgraphs pueden agrupar componentes por capa, por dominio, o por equipo. Esto da una vista de alto nivel que cualquier persona del equipo puede entender en 30 segundos.
 
 🔄 **[TRANSICIÓN]**
 
-> Para cerrar la parte técnica, hablemos de mejores prácticas.
+> Ya sabemos qué es Mermaid, qué tipos de diagramas soporta, y dónde usarlo. Ahora veamos cómo usarlo **bien** — las mejores prácticas.
 
 ---
 
-### 📏 SLIDE 30 — Mejores Prácticas
+### 📏 SLIDE 29 — best-practices (Mejores Prácticas)
+**"Mejores Prácticas con Mermaid"**
 **⏱️ Tiempo: 52:00 - 53:30 (1.5 min)**
 
 ---
 
 **DIÁLOGO:**
 
-> Después de usar Mermaid en producción durante años, estas son las mejores prácticas que recomiendo:
+> Después de usar Mermaid en varios proyectos, estas son las lecciones aprendidas:
 
 > **1. Mantener diagramas pequeños y enfocados**
-> - Un diagrama = un concepto
-> - Si tiene más de 15-20 nodos, dividirlo
-> - Mejor 3 diagramas simples que 1 complejo
+> - Un diagrama debe comunicar UNA idea
+> - Si tiene más de 15-20 nodos, dividirlo en varios
 
-> **2. Usar comentarios**
-```mermaid
-graph TD
-    %% Flujo principal de autenticación
-    A[Login] --> B{Válido?}
-    %% TODO: Agregar flujo de 2FA
-```
+> **2. Usar diagramas como documentación viva**
+> - Actualizar en el mismo PR que el código
+> - Incluir en la definición de "done" del equipo
 
-> **3. Documentar junto al código que describen**
-> - No en un wiki separado
-> - En el mismo directorio o lo más cerca posible
+> **3. Elegir el tipo correcto de diagrama**
+> - Flujo → procesos y decisiones
+> - Secuencia → comunicación entre componentes
+> - ER → modelo de datos
+> - Estado → ciclos de vida
 
-> **4. Incluir en el Definition of Done**
-> - ¿Cambiaste la arquitectura? Actualiza el diagrama
-> - ¿Nuevo endpoint? Agrega diagrama de secuencia
+> **4. Documentar el "por qué", no solo el "qué"**
+> - Agregar notas y comentarios con `%%`
+> - Complementar con texto explicativo alrededor del diagrama
 
-> **5. Empezar simple, iterar**
-> - No intenten documentar todo de golpe
-> - Empiecen con el diagrama de arquitectura general
-> - Agreguen diagramas conforme surja la necesidad
+⏸️ **[PAUSA INTERACTIVA]**
+
+> **¿Cuál de estas prácticas les parece más difícil de implementar en su equipo?** Piénsenlo un momento.
 
 ---
 
-### 🏷️ SLIDE 31 — Convenciones de Nombrado
+### 🏷️ SLIDE 30 — best-practices-naming (Mejores Prácticas)
+**"Convenciones de Nombrado"**
 **⏱️ Tiempo: 53:30 - 54:30 (1 min)**
 
 ---
 
 **DIÁLOGO:**
 
-> Las convenciones de nombrado son cruciales para mantener consistencia en equipos grandes:
+> Las convenciones de nombrado parecen triviales, pero hacen la diferencia entre diagramas mantenibles y diagramas que nadie entiende en 3 meses.
 
-> **Para nodos:**
-```
-✅ AuthService, UserDB, APIGateway    (PascalCase para servicios)
-✅ validate_token, check_auth         (snake_case para acciones)
-❌ a, b, c, node1, node2              (nunca IDs genéricos)
-```
+> **Recomendaciones:**
 
-> **Para archivos:**
-```
-✅ architecture-overview.md
-✅ auth-flow-sequence.md
-✅ user-entity-relationship.md
-❌ diagram1.md, nuevo-diagrama.md
-```
+> - **IDs de nodos**: usar camelCase descriptivo (`apiGateway`, `userService`)
+> - **Etiquetas**: usar lenguaje natural ("Servicio de Usuarios", "Base de Datos")
+> - **Archivos**: nombrar consistentemente (`architecture-overview.md`, `auth-flow.md`)
+> - **Comentarios**: usar `%%` para explicar decisiones no obvias
 
-> **Para relaciones:**
-```
-✅ A -->|"HTTP POST /login"| B        (describir la interacción)
-❌ A --> B                             (sin contexto)
+```mermaid
+graph TD
+    %% Flujo principal de autenticación
+    %% Actualizado: 2024-03-15 por @equipo-auth
+    userReq[Solicitud del Usuario] --> authGw{API Gateway}
+    authGw --> authSvc[Servicio Auth]
 ```
 
-> Definan estas convenciones en un `CONTRIBUTING.md` y referencien ejemplos.
+> El objetivo: que cualquier persona del equipo pueda leer y modificar el diagrama sin necesitar contexto adicional.
 
 ---
 
-### 🔧 SLIDE 32 — Mantenimiento y Gobernanza
+### 🔧 SLIDE 31 — best-practices-maintenance (Mejores Prácticas)
+**"Mantenimiento y Gobernanza"**
 **⏱️ Tiempo: 54:30 - 55:30 (1 min)**
 
 ---
 
 **DIÁLOGO:**
 
-> El mayor riesgo con cualquier documentación es que se desactualice. ¿Cómo prevenirlo con Mermaid?
+> El mayor riesgo con cualquier documentación es que se desactualice. ¿Cómo evitarlo con Mermaid?
 
 > **Estrategias de gobernanza:**
 
-> 1. **Code review**: Incluir revisión de diagramas en el checklist de PR
-> 2. **CODEOWNERS**: Asignar owners a los archivos de documentación
-> 3. **CI validation**: Validar sintaxis automáticamente
-> 4. **Freshness checks**: Alertar si un diagrama no se actualiza en X meses
-> 5. **Templates**: Proveer templates de diagramas para nuevos servicios
+> 1. **Ownership claro**: cada diagrama tiene un equipo responsable
+> 2. **Review obligatorio**: cambios en `/docs/architecture/` requieren aprobación del tech lead
+> 3. **Fecha de revisión**: agregar comentarios con fecha de última actualización
+> 4. **Validación en CI**: fallar el build si hay diagramas con sintaxis rota
+> 5. **Auditoría periódica**: revisar diagramas trimestralmente
 
-> Ejemplo de CODEOWNERS:
-```
-/docs/architecture/    @team-architects
-/docs/api-flows/       @team-backend
-/docs/data-model/      @team-data
-```
+> La regla de oro: **si cambias el código, cambias el diagrama**. Hacerlo parte de la cultura del equipo.
 
-> La clave: **hacer que mantener los diagramas sea más fácil que no mantenerlos**.
+🙋 **[PREGUNTA AL PÚBLICO]**
+
+> **¿Tienen algún proceso de revisión de documentación técnica en su equipo?** Si no lo tienen, este es un buen punto de partida.
 
 ---
 
-### 🔗 SLIDE 33 — Integración con Git
+### 🔗 SLIDE 32 — integration-git (Mejores Prácticas)
+**"Integración con Git y CI/CD"**
 **⏱️ Tiempo: 55:30 - 56:30 (1 min)**
 
 ---
 
 **DIÁLOGO:**
 
-> La integración con Git es donde Mermaid realmente brilla sobre las alternativas visuales.
+> Veamos cómo integrar Mermaid en su flujo de trabajo de Git de forma práctica:
 
-> **Ventajas concretas:**
-
-> 1. **Diffs legibles**: Pueden ver exactamente qué cambió en un diagrama
-```diff
-- A --> B[Servicio Monolítico]
-+ A --> B[API Gateway]
-+ B --> C[Servicio Auth]
-+ B --> D[Servicio Users]
+> **En el repositorio:**
+```
+/docs
+  /architecture
+    system-overview.md      ← diagrama de alto nivel
+    auth-flow.md            ← flujo de autenticación
+    data-model.md           ← diagrama ER
+  /adr
+    001-microservices.md    ← con diagramas de contexto
 ```
 
-> 2. **Blame**: Saber quién y cuándo modificó cada parte del diagrama
-> 3. **Branches**: Proponer cambios de arquitectura en feature branches
-> 4. **History**: Ver la evolución del sistema a lo largo del tiempo
-> 5. **Merge conflicts**: Se resuelven como cualquier conflicto de texto
+> **En el PR template:**
+> - [ ] ¿Este cambio afecta la arquitectura? → Actualizar diagrama correspondiente
 
-> Esto es imposible con herramientas visuales que generan archivos binarios o XML complejo.
+> **En el CI pipeline:**
+> - Lint de sintaxis Mermaid
+> - Generación automática de imágenes para documentación estática
+> - Alerta si archivos de arquitectura no se modifican junto con cambios estructurales
 
-⏸️ **[PAUSA INTERACTIVA]**
-
-> Piensen: **¿cuántas veces han tenido un conflicto de merge en un archivo de Draw.io?** Con Mermaid, eso se resuelve en segundos.
+> La integración con Git es lo que hace a Mermaid superior a herramientas visuales para equipos de desarrollo.
 
 ---
 
-### ⚡ SLIDE 34 — Rendimiento y Limitaciones
-**⏱️ Tiempo: 56:30 - 57:30 (1 min)**
+### ⚡ SLIDE 33 — tips-performance (Mejores Prácticas)
+**"Rendimiento y Limitaciones"**
+**⏱️ Tiempo: 56:30 - 58:00 (1.5 min)**
 
 ---
 
@@ -1249,162 +1215,152 @@ graph TD
 > Seamos honestos sobre las limitaciones. Mermaid no es perfecto para todo:
 
 > **Limitaciones conocidas:**
-> - 📊 **Diagramas muy grandes** (50+ nodos): El layout automático puede ser caótico
-> - 🎨 **Control pixel-perfect**: No pueden posicionar nodos manualmente
-> - 🔄 **Diagramas interactivos**: No soporta click handlers nativamente
-> - 📱 **Responsive**: Los SVG generados no siempre escalan bien en móvil
-> - 🔤 **Texto largo**: Las etiquetas largas pueden romper el layout
+> - Diagramas con más de ~50 nodos se vuelven difíciles de leer
+> - El control de posicionamiento es limitado (no puedes mover nodos manualmente)
+> - Algunos tipos de diagramas son menos maduros que otros
+> - El renderizado puede variar ligeramente entre plataformas
 
-> **Recomendaciones:**
-> - Si el diagrama tiene más de 20 nodos → dividir en sub-diagramas
-> - Si necesitan posicionamiento exacto → usar Draw.io para ese caso específico
-> - Si necesitan interactividad → considerar D3.js o herramientas especializadas
+> **Tips de rendimiento:**
+> - Dividir diagramas grandes en múltiples diagramas pequeños
+> - Usar `subgraph` para agrupar y reducir complejidad visual
+> - Preferir direcciones `LR` para flujos lineales, `TD` para jerarquías
+> - Evitar cruces de líneas reorganizando el orden de las declaraciones
 
-> **Rendimiento:**
-> - Renderizado client-side: depende del navegador
-> - Diagramas complejos pueden tardar 1-2 segundos
-> - En CI/CD con `mmdc`: ~500ms por diagrama
+> **Cuándo NO usar Mermaid:**
+> - Diagramas de red con posicionamiento específico
+> - Wireframes o mockups de UI
+> - Diagramas con más de 100 elementos
+> - Cuando necesitas interactividad avanzada (zoom, click, drill-down)
 
-> La regla de oro: **Mermaid es para documentación, no para diseño visual**.
+> Para esos casos, complementen con Draw.io, Figma, o herramientas especializadas.
+
+🔄 **[TRANSICIÓN]**
+
+> Y con eso llegamos al cierre. Recapitulemos lo que aprendimos hoy.
+
+**💡 Nota del presentador:** Ser honesto sobre las limitaciones genera credibilidad. La audiencia confía más en alguien que reconoce los límites de la herramienta.
 
 ---
 
-### ❓ SLIDE 35 — Sesión Q&A
-**⏱️ Tiempo: 57:30 - 59:00 (1.5 min)**
+### 🎯 SLIDE 34 — closing (Cierre)
+**"Resumen y Recursos"**
+**⏱️ Tiempo: 58:00 - 60:00 (2 min)**
 
 ---
 
 **DIÁLOGO:**
 
-> Llegamos al momento de preguntas. Abro el micrófono.
+> Recapitulemos. Hoy aprendimos que:
+
+> ✅ **Mermaid** convierte texto en diagramas — es "Markdown para diagramas"
+> ✅ Soporta **11+ tipos de diagramas** para casi cualquier necesidad
+> ✅ Es **versionable**, vive en Git, se revisa en PRs
+> ✅ Tiene **integración nativa** en GitHub, GitLab, Notion y más
+> ✅ Se puede **generar con IA** para acelerar la documentación
+> ✅ Con buenas prácticas, se convierte en **documentación viva**
+
+> **Recursos para seguir aprendiendo:**
+> - 📖 Documentación oficial: **mermaid.js.org**
+> - 🖥️ Editor en línea: **mermaid.live**
+> - 💻 Extensión VS Code: "Mermaid Preview"
+> - 🤖 Prompt para IA: "Genera un diagrama Mermaid de tipo [X] para [Y]"
 
 🙋 **[PREGUNTA AL PÚBLICO]**
 
-> **¿Qué preguntas tienen? Puede ser sobre sintaxis, casos de uso, integración, lo que sea.**
+> **¿Cuál es el primer diagrama que van a crear con Mermaid cuando vuelvan a su escritorio?**
 
-> *(Responder 2-3 preguntas. Tener preparadas respuestas para preguntas frecuentes:)*
+> *(Tomar 2-3 respuestas)*
 
-> **Preguntas frecuentes anticipadas:**
+> ¡Excelente! Les reto a que esta semana creen al menos UN diagrama Mermaid en su repositorio. Empiecen con el README — un diagrama de arquitectura de alto nivel. Van a ver cómo el equipo lo agradece.
 
-> **P: ¿Mermaid soporta diagramas de red/infraestructura?**
-> R: No nativamente, pero pueden usar flowcharts con iconos. Para infra compleja, consideren Diagrams (Python) o Draw.io.
+> **¡Gracias por su tiempo y atención!** ¿Preguntas finales?
 
-> **P: ¿Se puede usar en documentación offline?**
-> R: Sí, con la CLI `mmdc` pueden generar SVGs/PNGs. También funciona con Docusaurus, MkDocs, etc.
+⏸️ **[PAUSA INTERACTIVA — Q&A]**
 
-> **P: ¿Cómo manejan diagramas que son demasiado grandes?**
-> R: Dividir en sub-diagramas por bounded context. Un diagrama de alto nivel + diagramas detallados por componente.
+> *(Abrir espacio para preguntas finales. Si no hay preguntas, cerrar con energía.)*
 
-> **P: ¿Hay forma de reutilizar componentes entre diagramas?**
-> R: No nativamente. Pero pueden usar templates y scripts para generar diagramas con partes comunes.
+> Recuerden: **mermaid.live** para practicar, y no duden en contactarme si necesitan ayuda implementando Mermaid en su equipo.
 
-> **P: ¿Funciona con dark mode?**
-> R: Sí, el tema `dark` se adapta. GitHub también renderiza correctamente en dark mode.
+> ¡Éxito diagramando! 🎉
 
-**💡 Nota del presentador:** Si no hay preguntas, tener preparadas 2-3 preguntas propias para generar discusión. "¿Alguien ve un caso de uso en su equipo donde podrían empezar mañana?"
+**💡 Nota del presentador:** Terminar con energía y un call-to-action claro. El reto de "un diagrama esta semana" genera compromiso. Quedarse disponible para preguntas individuales después de la sesión.
 
 ---
 
-### 🎬 SLIDE 36 — Cierre y Recursos
-**⏱️ Tiempo: 59:00 - 60:00 (1 min)**
+## ✅ Checklist del Presentador
+
+### Antes de la presentación
+- [ ] Laptop cargada y con adaptador de video
+- [ ] Navegador abierto con **mermaid.live** en una pestaña
+- [ ] Editor de código abierto (VS Code con extensión Mermaid Preview)
+- [ ] Presentación cargada y probada en el proyector
+- [ ] Conexión a internet verificada (para demos en vivo)
+- [ ] Plan B: capturas de pantalla de las demos por si falla internet
+- [ ] Snippets de código listos para copiar/pegar durante el ejercicio
+- [ ] Agua y reloj/timer visible
+
+### Durante la presentación
+- [ ] Hacer contacto visual con diferentes secciones de la audiencia
+- [ ] Respetar los tiempos — usar timer discreto
+- [ ] Si una demo falla, pasar al plan B sin disculparse excesivamente
+- [ ] Caminar entre la audiencia durante el ejercicio práctico (Slide 20)
+- [ ] Tomar nota de preguntas interesantes para el Q&A final
+- [ ] Ajustar ritmo según la energía de la audiencia
+
+### Después de la presentación
+- [ ] Compartir link de la presentación con los asistentes
+- [ ] Enviar recursos adicionales por email/Slack
+- [ ] Recopilar feedback (formulario rápido de 3 preguntas)
+- [ ] Dar seguimiento a preguntas que no se pudieron responder en vivo
 
 ---
 
-**DIÁLOGO:**
+## 💡 Tips para el Presentador
 
-> Para cerrar, les dejo los recursos clave:
+### Manejo del tiempo
+- Si vas **adelantado**: expandir las demos en vivo, pedir más participación, profundizar en preguntas del público
+- Si vas **atrasado**: reducir las demos de slides 14-17 (diagramas avanzados), mostrar solo el código sin escribirlo en vivo
+- El **ejercicio práctico** (Slide 20) es el buffer principal — puede ser 3-5 minutos según el tiempo disponible
 
-> **📚 Recursos esenciales:**
-> - 🌐 **Editor online**: [mermaid.live](https://mermaid.live)
-> - 📖 **Documentación oficial**: [mermaid.js.org](https://mermaid.js.org)
-> - 💻 **GitHub**: [github.com/mermaid-js/mermaid](https://github.com/mermaid-js/mermaid)
-> - 🔌 **VS Code Extension**: "Markdown Preview Mermaid Support"
-> - 🛠️ **CLI**: `npm install -g @mermaid-js/mermaid-cli`
+### Manejo de la audiencia
+- **Audiencia técnica senior**: enfocarse en casos de uso, CI/CD, gobernanza. Menos tiempo en sintaxis básica
+- **Audiencia junior**: más tiempo en demos, más ejemplos paso a paso, más tiempo en el ejercicio
+- **Audiencia mixta**: seguir el guión tal cual — está balanceado para ambos perfiles
 
-> **🎯 Mi reto para ustedes:**
+### Manejo de problemas técnicos
+- **Se cae internet**: usar capturas de pantalla pre-preparadas. El editor de la presentación funciona offline
+- **El proyector no muestra bien el código**: aumentar font size del editor a 20px+ antes de empezar
+- **Nadie participa en las preguntas**: reformular como "levanten la mano los que..." (más fácil que responder verbalmente)
+- **Alguien hace una pregunta muy avanzada**: "Excelente pregunta, la anoto para el Q&A final donde podemos profundizar"
 
-> Esta semana, hagan **UNA** de estas cosas:
-> 1. Agreguen un diagrama de arquitectura al README de su proyecto principal
-> 2. Documenten un flujo de API con un diagrama de secuencia
-> 3. Creen un diagrama ER de su base de datos
+### Frases de emergencia
+- Si pierdes el hilo: *"Volvamos al punto principal aquí..."*
+- Si una demo falla: *"La tecnología nos recuerda por qué necesitamos buenos diagramas de troubleshooting"* (humor)
+- Si nadie responde: *"No se preocupen, no hay respuesta incorrecta. Déjenme reformular..."*
+- Si vas muy rápido: *"Hagamos una pausa aquí. ¿Alguna duda hasta este punto?"*
 
-> Solo una. Empiecen pequeño. Una vez que lo hagan, van a querer documentar todo con Mermaid.
-
-⏸️ **[PAUSA INTERACTIVA]**
-
-> **Levanten la mano los que se comprometen a crear al menos un diagrama esta semana.**
-
-> *(Esperar manos alzadas)*
-
-> ¡Excelente! Les tomo la palabra.
-
-> Muchas gracias por su tiempo y atención. Los diagramas como código no son el futuro — son el presente. Y ahora ustedes tienen las herramientas para aprovecharlo.
-
-> ¡Gracias! 👏
-
----
-
-## 📋 CHECKLIST DEL PRESENTADOR
-
-### Antes de la presentación:
-- [ ] Verificar que mermaid.live funciona (tener backup offline)
-- [ ] Tener VS Code abierto con la extensión de Mermaid
-- [ ] Preparar snippets de código para demos en vivo
-- [ ] Verificar conexión a internet
-- [ ] Tener la presentación en modo pantalla completa
-- [ ] Preparar un diagrama "wow" complejo para mostrar si hay tiempo extra
-
-### Durante la presentación:
-- [ ] Mantener contacto visual con la audiencia
-- [ ] No leer los slides — usar como apoyo visual
-- [ ] Caminar durante el ejercicio práctico para ayudar
-- [ ] Controlar el tiempo con un reloj visible
-- [ ] Si una demo falla, tener screenshots de backup
-
-### Después de la presentación:
-- [ ] Compartir el link de la presentación
-- [ ] Enviar los recursos por email/Slack
-- [ ] Crear un canal de Slack para dudas post-sesión
-- [ ] Hacer follow-up en una semana preguntando quién creó su primer diagrama
+### Energía y ritmo
+- **Minutos 0-10**: Energía alta, establecer rapport, generar curiosidad
+- **Minutos 10-25**: Ritmo constante, alternar entre explicación y demo
+- **Minutos 25-32**: Mantener atención con diagramas visualmente interesantes
+- **Minutos 32-40**: Pico de energía con el ejercicio práctico
+- **Minutos 40-52**: Ritmo conversacional, casos de uso reales
+- **Minutos 52-58**: Tono de cierre, consolidar aprendizajes
+- **Minutos 58-60**: Energía alta para el cierre, call-to-action motivador
 
 ---
 
-## 🎯 TIPS PARA EL PRESENTADOR
+## 📊 Resumen de Interacciones
 
-### Manejo del tiempo:
-> Si vas adelantado: expandir las demos en vivo y tomar más preguntas
-> Si vas atrasado: reducir slides 13-17 a menciones rápidas y acortar la comparativa
-
-### Manejo de la audiencia:
-> - Si la audiencia es muy técnica: profundizar en CI/CD y configuración avanzada
-> - Si la audiencia es mixta: enfocarse en casos de uso y beneficios de negocio
-> - Si hay poca participación: hacer preguntas de sí/no con mano alzada
-
-### Errores comunes a evitar:
-> - ❌ No intentar cubrir TODOS los tipos de diagramas en detalle
-> - ❌ No hacer demos demasiado complejas que puedan fallar
-> - ❌ No asumir que todos conocen Git o Markdown
-> - ❌ No olvidar el ejercicio práctico — es lo que más recuerdan
-
-### Frases de transición útiles:
-> - "Esto nos lleva naturalmente a..."
-> - "Ahora que entendemos X, veamos cómo se aplica a..."
-> - "¿Recuerdan cuando mencioné...? Aquí es donde cobra sentido"
-> - "Esto es genial en teoría, pero veámoslo en la práctica"
+| Tipo | Cantidad | Slides |
+|------|----------|--------|
+| 🙋 Preguntas al público | 12 | 1, 3, 7, 8, 10, 12, 16, 18, 21, 24, 27, 31, 34 |
+| 💻 Demos en vivo | 11 | 3, 7, 8, 9, 10, 11, 12, 16, 17, 18, 28 |
+| ⏸️ Pausas interactivas | 5 | 4, 9, 14, 29, 34 |
+| ✏️ Ejercicios | 1 | 20 |
+| 🔄 Transiciones | 8 | 2, 5, 6, 13, 17, 19, 28, 33 |
 
 ---
 
-## 📊 MÉTRICAS DE ÉXITO DE LA PRESENTACIÓN
-
-| Métrica | Objetivo |
-|---------|----------|
-| Asistentes que abren mermaid.live | > 80% |
-| Asistentes que completan el ejercicio | > 60% |
-| Preguntas durante la sesión | > 5 |
-| Compromisos de crear un diagrama | > 50% |
-| NPS post-sesión | > 8/10 |
-
----
-
-*Documento generado para la presentación interactiva de Mermaid. Duración: 60 minutos. 36 slides.*
-*Última actualización: 2024*
+*Documento generado para la presentación de 34 slides "Mermaid: Diagramación Inteligente"*
+*Duración total: 60 minutos | Formato: Interactivo con demos en vivo*
