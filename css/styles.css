@@ -211,7 +211,12 @@ body {
 .navigation-bar button span,
 .navigation-bar button {
   position: relative;
-  z-index: 1;
+  z-index: auto;
+  isolation: isolate;
+}
+
+.navigation-bar button::before {
+  z-index: -1;
 }
 
 .navigation-bar button:active:not(:disabled) {
@@ -313,6 +318,74 @@ body {
 .progress-bar::-moz-progress-bar {
   background: var(--gradient-accent);
   border-radius: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   6b. Canvas de Dibujo (Lápiz)
+   -------------------------------------------------------------------------- */
+#draw-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  pointer-events: none;
+  cursor: default;
+}
+
+#draw-canvas.active {
+  pointer-events: auto;
+  cursor: crosshair;
+}
+
+#btn-draw {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 110;
+  font-size: 1.1rem;
+  min-width: auto;
+  padding: 0.5rem 0.75rem;
+  background: rgba(30, 41, 59, 0.8);
+  border: 1px solid var(--color-border, #475569);
+  border-radius: 8px;
+  color: var(--color-text-secondary, #94a3b8);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
+#btn-draw:hover {
+  border-color: var(--color-accent, #6ea8fe);
+  color: var(--color-accent, #6ea8fe);
+}
+
+#btn-draw.active {
+  background: var(--gradient-accent);
+  color: var(--color-bg-primary);
+  border-color: transparent;
+  box-shadow: var(--shadow-glow);
+}
+
+#btn-clear-draw {
+  position: absolute;
+  top: 1rem;
+  right: 4rem;
+  z-index: 110;
+  font-size: 1.1rem;
+  min-width: auto;
+  padding: 0.5rem 0.75rem;
+  background: rgba(30, 41, 59, 0.8);
+  border: 1px solid var(--color-border, #475569);
+  border-radius: 8px;
+  color: var(--color-text-secondary, #94a3b8);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
+#btn-clear-draw:hover {
+  border-color: var(--color-accent, #6ea8fe);
+  color: var(--color-accent, #6ea8fe);
 }
 
 /* --------------------------------------------------------------------------

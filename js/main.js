@@ -14,6 +14,7 @@ import { SlideRenderer } from './slide-renderer.js';
 import { MermaidRenderer } from './mermaid-renderer.js';
 import { InteractiveEditor } from './interactive-editor.js';
 import { Accessibility } from './accessibility.js';
+import { DrawCanvas } from './draw-canvas.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
   // ── Referencias al DOM ──────────────────────────
@@ -41,6 +42,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   // ── Crear instancias de componentes ──────────────
   const interactiveEditor = new InteractiveEditor(mermaidRenderer);
   const slideRenderer = new SlideRenderer(slideContainerEl, mermaidRenderer, interactiveEditor);
+  const drawCanvas = new DrawCanvas();
+  drawCanvas.init();
 
   // ── Construir mapa de id → índice para navegación desde el índice ──
   const slideIdToIndex = new Map();
@@ -65,6 +68,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   async function onSlideChange(index, direction) {
     const slide = slides[index];
     if (!slide) return;
+
+    // Limpiar trazos del canvas de dibujo
+    drawCanvas.onSlideChange();
 
     // Renderizar la diapositiva
     await slideRenderer.render(slide, direction);

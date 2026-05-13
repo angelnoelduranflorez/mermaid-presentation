@@ -10,6 +10,9 @@
   <section id="presentation" aria-label="Presentación sobre Mermaid">
     <canvas class="particles-canvas" id="particles-canvas" aria-hidden="true" tabindex="-1"></canvas>
     <div id="slide-container" aria-live="polite" aria-atomic="true"></div>
+    <canvas id="draw-canvas" aria-hidden="true"></canvas>
+    <button id="btn-draw" type="button" aria-label="Dibujar sobre la diapositiva" title="Lápiz">&#9998;</button>
+    <button id="btn-clear-draw" type="button" aria-label="Deshacer último trazo" title="Deshacer">&#10226;</button>
     <nav class="navigation-bar" aria-label="Navegación de diapositivas">
       <button id="btn-previous" type="button" disabled>&#8592; Anterior</button>
       <div class="progress-indicator" aria-label="Progreso de la presentación">
@@ -841,6 +844,107 @@
 
     if (!container || !presentation) return;
 
+    // ── Draw Canvas Setup ──────────────────────────
+    var drawCanvas = document.getElementById('draw-canvas');
+    var btnDraw = document.getElementById('btn-draw');
+    var btnClearDraw = document.getElementById('btn-clear-draw');
+    var drawCtx = drawCanvas ? drawCanvas.getContext('2d') : null;
+    var drawActive = false;
+    var isDrawing = false;
+    var drawHistory = [];
+
+    function resizeDrawCanvas() {
+      if (!drawCanvas) return;
+      drawCanvas.width = drawCanvas.offsetWidth;
+      drawCanvas.height = drawCanvas.offsetHeight;
+    }
+    resizeDrawCanvas();
+    window.addEventListener('resize', resizeDrawCanvas);
+
+    function clearDrawCanvas() {
+      if (drawCtx && drawCanvas) {
+        drawCtx.clearRect(0, 0, drawCanvas.width, drawCanvas.height);
+      }
+      drawHistory = [];
+    }
+
+    function saveDrawState() {
+      if (drawCtx && drawCanvas) {
+        drawHistory.push(drawCtx.getImageData(0, 0, drawCanvas.width, drawCanvas.height));
+      }
+    }
+
+    function undoDrawCanvas() {
+      if (!drawCtx || !drawCanvas || drawHistory.length === 0) return;
+      drawHistory.pop();
+      drawCtx.clearRect(0, 0, drawCanvas.width, drawCanvas.height);
+      if (drawHistory.length > 0) {
+        drawCtx.putImageData(drawHistory[drawHistory.length - 1], 0, 0);
+      }
+    }
+
+    if (btnDraw) {
+      btnDraw.addEventListener('click', function() {
+        drawActive = !drawActive;
+        drawCanvas.classList.toggle('active', drawActive);
+        btnDraw.classList.toggle('active', drawActive);
+      });
+    }
+
+    if (btnClearDraw) {
+      btnClearDraw.addEventListener('click', function() {
+        undoDrawCanvas();
+      });
+    }
+
+    if (drawCanvas) {
+      drawCanvas.addEventListener('mousedown', function(e) {
+        if (!drawActive) return;
+        saveDrawState();
+        isDrawing = true;
+        var rect = drawCanvas.getBoundingClientRect();
+        drawCtx.beginPath();
+        drawCtx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+        drawCtx.strokeStyle = '#ff4444';
+        drawCtx.lineWidth = 3;
+        drawCtx.lineCap = 'round';
+        drawCtx.lineJoin = 'round';
+      });
+      drawCanvas.addEventListener('mousemove', function(e) {
+        if (!drawActive || !isDrawing) return;
+        var rect = drawCanvas.getBoundingClientRect();
+        drawCtx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+        drawCtx.stroke();
+      });
+      drawCanvas.addEventListener('mouseup', function() { isDrawing = false; });
+      drawCanvas.addEventListener('mouseleave', function() { isDrawing = false; });
+
+      drawCanvas.addEventListener('touchstart', function(e) {
+        if (!drawActive) return;
+        e.preventDefault();
+        saveDrawState();
+        isDrawing = true;
+        var rect = drawCanvas.getBoundingClientRect();
+        var touch = e.touches[0];
+        drawCtx.beginPath();
+        drawCtx.moveTo(touch.clientX - rect.left, touch.clientY - rect.top);
+        drawCtx.strokeStyle = '#ff4444';
+        drawCtx.lineWidth = 3;
+        drawCtx.lineCap = 'round';
+        drawCtx.lineJoin = 'round';
+      }, { passive: false });
+      drawCanvas.addEventListener('touchmove', function(e) {
+        if (!drawActive || !isDrawing) return;
+        e.preventDefault();
+        var rect = drawCanvas.getBoundingClientRect();
+        var touch = e.touches[0];
+        drawCtx.lineTo(touch.clientX - rect.left, touch.clientY - rect.top);
+        drawCtx.stroke();
+      }, { passive: false });
+      drawCanvas.addEventListener('touchend', function() { isDrawing = false; });
+      drawCanvas.addEventListener('touchcancel', function() { isDrawing = false; });
+    }
+
     await MermaidRenderer.initialize({ theme: 'dark' });
     setupLiveRegion(presentation);
 
@@ -904,6 +1008,7 @@
     }
 
     slideNav = createNavigator(slides.length, function(index, direction) {
+      clearDrawCanvas();
       renderSlide(index, direction);
     });
 
