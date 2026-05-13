@@ -12,10 +12,13 @@
     <div id="slide-container" aria-live="polite" aria-atomic="true"></div>
     <nav class="navigation-bar" aria-label="Navegación de diapositivas">
       <button id="btn-previous" type="button" disabled>&#8592; Anterior</button>
-      <output class="progress-indicator" aria-label="Progreso de la presentación">
-        <span id="progress-text">1 / 37</span>
+      <div class="progress-indicator" aria-label="Progreso de la presentación">
+        <span class="progress-text-wrapper">
+          <input id="progress-input" type="text" value="1" aria-label="Número de diapositiva" />
+          <span class="progress-total"> / 37</span>
+        </span>
         <progress id="progress-bar-fill" class="progress-bar" value="1" max="37">1 de 37</progress>
-      </output>
+      </div>
       <button id="btn-next" type="button">Siguiente &#8594;</button>
     </nav>
   </section>
@@ -551,7 +554,8 @@
     let currentIndex = 0;
     const btnPrev = document.getElementById('btn-previous');
     const btnNext = document.getElementById('btn-next');
-    const progressText = document.getElementById('progress-text');
+    const progressInput = document.getElementById('progress-input');
+    const progressTotal = document.querySelector('.progress-total');
     const progressBar = document.getElementById('progress-bar-fill');
 
     function canGoNext() { return currentIndex < totalSlides - 1; }
@@ -563,9 +567,18 @@
     }
 
     function updateProgress() {
-      const display = (currentIndex + 1) + ' / ' + totalSlides;
-      if (progressText) progressText.textContent = display;
+      if (progressInput) progressInput.value = currentIndex + 1;
+      if (progressTotal) progressTotal.textContent = ' / ' + totalSlides;
       if (progressBar) { progressBar.value = currentIndex + 1; progressBar.max = totalSlides; }
+    }
+
+    function handleProgressInput() {
+      var value = parseInt(progressInput.value, 10);
+      if (!isNaN(value) && value >= 1 && value <= totalSlides) {
+        goTo(value - 1);
+      } else {
+        progressInput.value = currentIndex + 1;
+      }
     }
 
     function emitChange(direction) {
@@ -594,6 +607,16 @@
     // Buttons
     if (btnPrev) btnPrev.addEventListener('click', previous);
     if (btnNext) btnNext.addEventListener('click', next);
+
+    // Progress input
+    if (progressInput) {
+      progressInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') { e.preventDefault(); handleProgressInput(); progressInput.blur(); }
+        else if (e.key === 'Escape') { e.preventDefault(); progressInput.value = currentIndex + 1; progressInput.blur(); }
+        e.stopPropagation();
+      });
+      progressInput.addEventListener('blur', handleProgressInput);
+    }
 
     updateButtons();
     updateProgress();

@@ -248,6 +248,46 @@ body {
   font-weight: 600;
 }
 
+.progress-text-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+#progress-input {
+  width: 3.5ch;
+  text-align: center;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  padding: 0.1em 0.2em;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+#progress-input:hover {
+  border-color: var(--color-text-secondary);
+}
+
+#progress-input:focus {
+  outline: none;
+  border-color: var(--color-accent, #6ea8fe);
+  background-color: var(--color-bg-surface, rgba(255,255,255,0.05));
+}
+
+.progress-total {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  font-weight: 600;
+}
+
 .progress-bar {
   width: 100%;
   height: 4px;

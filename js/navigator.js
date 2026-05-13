@@ -23,8 +23,10 @@ export class Navigator {
     this._btnPrevious = null;
     /** @type {HTMLButtonElement | null} */
     this._btnNext = null;
+    /** @type {HTMLInputElement | null} */
+    this._progressInput = null;
     /** @type {HTMLElement | null} */
-    this._progressText = null;
+    this._progressTotal = null;
     /** @type {HTMLProgressElement | null} */
     this._progressBar = null;
 
@@ -32,6 +34,9 @@ export class Navigator {
     this._handleKeydown = this._handleKeydown.bind(this);
     this._handlePrevClick = () => this.previous();
     this._handleNextClick = () => this.next();
+    this._handleProgressInput = this._handleProgressInput.bind(this);
+    this._handleProgressKeydown = this._handleProgressKeydown.bind(this);
+    this._handleProgressBlur = this._handleProgressBlur.bind(this);
   }
 
   /**
@@ -96,7 +101,8 @@ export class Navigator {
   bindEvents() {
     this._btnPrevious = document.getElementById('btn-previous');
     this._btnNext = document.getElementById('btn-next');
-    this._progressText = document.getElementById('progress-text');
+    this._progressInput = document.getElementById('progress-input');
+    this._progressTotal = document.querySelector('.progress-total');
     this._progressBar = document.getElementById('progress-bar-fill');
 
     // Eventos de teclado
@@ -110,6 +116,12 @@ export class Navigator {
       this._btnNext.addEventListener('click', this._handleNextClick);
     }
 
+    // Eventos del input de progreso
+    if (this._progressInput) {
+      this._progressInput.addEventListener('keydown', this._handleProgressKeydown);
+      this._progressInput.addEventListener('blur', this._handleProgressBlur);
+    }
+
     // Estado inicial de botones y progreso
     this._updateButtonStates();
     this.updateProgressIndicator();
@@ -119,10 +131,11 @@ export class Navigator {
    * Actualiza el indicador de progreso (texto y barra) en el DOM.
    */
   updateProgressIndicator() {
-    const display = `${this.currentIndex + 1} / ${this.totalSlides}`;
-
-    if (this._progressText) {
-      this._progressText.textContent = display;
+    if (this._progressInput) {
+      this._progressInput.value = this.currentIndex + 1;
+    }
+    if (this._progressTotal) {
+      this._progressTotal.textContent = ` / ${this.totalSlides}`;
     }
     if (this._progressBar) {
       this._progressBar.value = this.currentIndex + 1;
@@ -155,6 +168,46 @@ export class Navigator {
     if (this._btnNext) {
       this._btnNext.disabled = !this.canGoNext();
     }
+  }
+
+  /**
+   * Navega a la página escrita en el input de progreso.
+   */
+  _handleProgressInput() {
+    const value = parseInt(this._progressInput.value, 10);
+    if (!isNaN(value) && value >= 1 && value <= this.totalSlides) {
+      this.goTo(value - 1);
+    } else {
+      // Restaurar el valor actual si es inválido
+      this._progressInput.value = this.currentIndex + 1;
+    }
+  }
+
+  /**
+   * Handler de keydown en el input de progreso.
+   * Navega al presionar Enter, cancela con Escape.
+   * @param {KeyboardEvent} event
+   */
+  _handleProgressKeydown(event) {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      this._handleProgressInput();
+      this._progressInput.blur();
+    } else if (event.key === 'Escape') {
+      event.preventDefault();
+      this._progressInput.value = this.currentIndex + 1;
+      this._progressInput.blur();
+    }
+    // Evitar que las flechas naveguen diapositivas mientras se edita
+    event.stopPropagation();
+  }
+
+  /**
+   * Handler de blur en el input de progreso.
+   * Navega a la página escrita al perder el foco.
+   */
+  _handleProgressBlur() {
+    this._handleProgressInput();
   }
 
   /**
