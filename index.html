@@ -415,8 +415,7 @@
         '🏷️ Usa IDs descriptivos: "authService" en vez de "A"',
         '✂️ Divide diagramas complejos en subdiagramas por contexto',
         '📌 Incluye siempre un título o descripción del diagrama',
-        '🔀 Versiona los diagramas junto al código que documentan',
-        '👀 Revisa los diagramas en cada PR que modifique la arquitectura',
+        '🔀 Versiona los diagramas junto al código que documentan'
       ],
     },
     {
@@ -441,24 +440,10 @@
         '🤖 Automatiza validación de sintaxis Mermaid en CI (mermaid-cli)',
         '🖼️ Genera imágenes PNG/SVG automáticamente para wikis',
         '📅 Revisa diagramas trimestralmente para detectar drift',
-        '👤 Designa un "dueño" de la documentación visual por equipo',
         '🔍 Usa linting: mermaid-lint para detectar problemas de estilo',
       ],
     },
-    {
-      id: 'integration-git', type: 'content', section: 'Mejores Prácticas',
-      title: '🔗 Integración con Git y CI/CD',
-      content: '<p>Cómo integrar Mermaid en tu flujo de trabajo de desarrollo para máximo beneficio.</p>',
-      bulletPoints: [
-        '🪝 Pre-commit hooks: validar sintaxis antes de commitear',
-        '⚡ GitHub Actions: generar SVG/PNG en cada push',
-        '👁️ Markdown preview: VS Code + extensión Mermaid Preview',
-        '📚 Documentación automática: Docusaurus/MkDocs con plugin Mermaid',
-        '🔍 Code review: incluir diagramas en la descripción del PR',
-        '💻 mermaid-cli (mmdc): renderizar desde línea de comandos',
-      ],
-      footerHtml: '<div style="background:#1e293b;border:1px solid #334155;border-radius:8px;padding:1rem;margin-top:1rem;max-width:500px;"><code style="font-size:0.8rem;color:#6ea8fe;">$ npx @mermaid-js/mermaid-cli mmdc -i diagram.mmd -o output.svg</code></div>',
-    },
+
     {
       id: 'tips-performance', type: 'content', section: 'Mejores Prácticas',
       title: '⚡ Rendimiento y Limitaciones',
