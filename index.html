@@ -222,7 +222,7 @@
       id: 'flowchart', type: 'diagram', section: 'Tipos de Diagramas',
       title: '🔀 Diagramas de Flujo (Flowchart)',
       content: '<p>El tipo más utilizado. Representan procesos, decisiones y flujos de trabajo.</p>',
-      mermaidCode: 'graph TD\n    A[Inicio] --> B{¿Autenticado?}\n    B -->|Sí| C[Dashboard]\n    B -->|No| D[Login]\n    D --> E[Credenciales]\n    E --> F{¿Válidas?}\n    F -->|Sí| C\n    F -->|No| G[Error]\n    G --> D',
+      mermaidCode: 'graph TD\n    A([Inicio]) ==> B{¿Autenticado?}\n    B -->|Sí| C[Dashboard]\n    B -.->|No| D[[Validar Login]]\n    subgraph Backend\n    D --> E[(Base de Datos)]\n    end\n    E --> B',
       mermaidAltText: 'Diagrama de flujo de autenticación de usuario.',
     },
     {
@@ -250,7 +250,7 @@
       id: 'gantt-diagram', type: 'diagram', section: 'Tipos de Diagramas',
       title: '📅 Diagramas de Gantt',
       content: '<p>Visualizan la planificación temporal de un proyecto con tareas y dependencias.</p>',
-      mermaidCode: 'gantt\n    title Plan de Proyecto\n    dateFormat YYYY-MM-DD\n    section Diseño\n    Investigación :a1, 2024-01-01, 10d\n    Prototipo :a2, after a1, 15d\n    section Desarrollo\n    Backend :b1, after a2, 20d\n    Frontend :b2, after a2, 25d\n    section Pruebas\n    Testing :c1, after b1, 10d',
+      mermaidCode: 'gantt\n    title Plan de Proyecto\n    dateFormat YYYY-MM-DD\n    section Diseño\n    Investigación :a1, 2024-01-01, 10d\n    Prototipo :a2, after a1, 12d\n    section Desarrollo\n    Backend :b1, after a2, 15d\n    Frontend :b2, after a2, 18d',
       mermaidAltText: 'Diagrama de Gantt con fases de diseño, desarrollo y pruebas.',
     },
     {
@@ -326,9 +326,9 @@
     {
       id: 'editor-playground', type: 'interactive', section: 'Editor Interactivo',
       title: '✏️ Experimenta con Mermaid',
-      content: '<p>Modifica el código y observa cómo el diagrama se actualiza en tiempo real. ¡Prueba a cambiar nodos y conexiones!</p>',
-      mermaidCode: 'graph LR\n    A[Tu Idea] --> B[Código Mermaid]\n    B --> C[Diagrama Visual]\n    C --> D{¿Te gusta?}\n    D -->|Sí| E[Comparte]\n    D -->|No| A',
-      mermaidAltText: 'Diagrama editable: flujo iterativo de idea a diagrama.',
+      content: '',
+      mermaidCode: 'graph TD\n    A([Inicio]) ==> B{¿Tipo de diagrama?}\n    B -->|Flujo| C[graph TD/LR]\n    B -.->|Secuencia| D[sequenceDiagram]\n    B -->|Clases| E[classDiagram]\n    subgraph Resultado\n    C --> F[(Documentación)]\n    D --> F\n    E --> F\n    end\n    F -->|Comparte| G([Fin])',
+      mermaidAltText: 'Diagrama editable que combina formas, flechas y subgrafos explicados en slides anteriores.',
       isInteractive: true,
     },
 
@@ -984,6 +984,12 @@
       // Render mermaid diagrams
       if (slide.mermaidCode && !slide.isInteractive) {
         await MermaidRenderer.renderAllInContainer(wrapper);
+        // Add zoom toggle to diagram previews
+        wrapper.querySelectorAll('.diagram-preview').forEach(function(preview) {
+          preview.addEventListener('click', function() {
+            preview.classList.toggle('zoomed');
+          });
+        });
       }
 
       // Mount interactive editor
